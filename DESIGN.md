@@ -2,21 +2,25 @@
 
 ## Visual Theme
 
-Landing de conversão noturna. Cena: mesa às 23h, holofoil de carta pegando o flash do celular, anúncio do Mercado Livre aberto. A página é um **quadro de ofertas**, não um fã-clube. Estratégia de cor: **Committed** — cobalto carrega o hero; aqua-holofoil aponta a ação.
+Landing de conversão noturna. Cena: o render 3D da marca no escuro — Charizard, Pikachu, Gengar e Mewtwo em volta do logo amarelo. A página é um **quadro de ofertas**, não um fã-clube. Estratégia de cor: **Full palette** extraída da arte da hero — preto carrega o campo; amarelo do Pikachu aponta a ação; laranja, roxo e lilás sustentam as seções.
 
 ## Color
 
-Seed Impeccable `seed-163` · `oklch(0.450 0.086 230)` (cobalto). Fundo near-black sem tinta. Texto do CTA no aqua: branco (L médio + croma).
+Paleta da arte 3D (não do seed cobalto). Fundo preto da imagem. CTA amarelo com tinta escura (contraste AA no botão).
 
-| Token | OKLCH | Uso |
-|---|---|---|
-| `--bg` | `oklch(0.10 0 0)` | Página |
-| `--surface` | `oklch(0.16 0.012 230)` | Painéis |
-| `--ink` | `oklch(0.96 0.012 230)` | Texto |
-| `--muted` | `oklch(0.72 0.02 230)` | Secundário |
-| `--primary` | `oklch(0.48 0.12 230)` | Campos de marca, painel hero |
-| `--accent` | `oklch(0.72 0.13 195)` | CTA, pills, holofoil |
-| `--accent-ink` | `oklch(0.14 0.02 230)` | Texto sobre accent só se L>0.85; CTA usa `--ink` |
+| Token | OKLCH | Origem | Uso |
+|---|---|---|---|
+| `--bg` | `oklch(0.08 0 0)` | Fundo da arte | Página |
+| `--surface` | `oklch(0.18 0.04 310)` | Gengar | Painéis |
+| `--ink` | `oklch(0.96 0.02 98)` | Amarelo do logo, quase branco | Texto |
+| `--muted` | `oklch(0.80 0.04 285)` | Lilás do Mewtwo | Secundário (≥4.5:1 no preto) |
+| `--primary` | `oklch(0.42 0.09 310)` | Gengar | Campos de marca |
+| `--primary-deep` | `oklch(0.22 0.07 310)` | Gengar escuro | Faixas, hero esquerdo |
+| `--accent` | `oklch(0.88 0.18 98)` | Pikachu / logo | CTA, pulso |
+| `--accent-ink` | `oklch(0.18 0.05 55)` | Sombra do Charizard | Texto no amarelo |
+| `--flame` | `oklch(0.70 0.16 52)` | Charizard | Kickers, números, hover |
+| `--mark` | `oklch(0.50 0.13 250)` | Contorno azul do logo | Bordas, pills |
+| `--psychic` | `oklch(0.78 0.04 285)` | Corpo do Mewtwo | Destaque lilás |
 
 ## Typography
 
@@ -29,7 +33,7 @@ Voz física: etiqueta de preço de camelô + ficha de torneio.
 ## Layout
 
 - Mobile-first, coluna única até 720px
-- Desktop: hero assimétrico (copy + CTA à esquerda, stack de cartas à direita)
+- Desktop: hero assimétrico (copy + CTA à esquerda, arte 3D à direita)
 - Ritmo: grupo apertado (headline + pills + botão), respiro largo entre seções
 - Sem grade de 4 cards iguais. Categorias de oferta e curadoria em lista/quadro tipográfico
 - Origem das ofertas: só Mercado Livre + curadoria (sem inventar outras lojas)
@@ -37,15 +41,15 @@ Voz física: etiqueta de preço de camelô + ficha de torneio.
 
 ## Components
 
-- **CTA primário:** botão accent, texto “Entrar no grupo no WhatsApp”, ícone WhatsApp, alvo ≥ 48px
-- **Pills de benefício:** accent fraco / outline, sem emoji-spam
+- **CTA primário:** botão amarelo Pikachu, tinta escura, texto “Entrar no grupo no WhatsApp”, ícone WhatsApp, alvo ≥ 48px
+- **Pills de benefício:** borda laranja / fundo Gengar, sem emoji-spam
 - **Faixa de preço:** motivo “de / por / comparado” — sem números inventados
 - **Aviso legal:** bloco tipográfico no rodapé, não escondido
 
 ## Motion
 
-Uma entrada no hero (stack de cartas + brilho holofoil). Hover só no CTA (glow curto). `prefers-reduced-motion: reduce` = estático.
+Uma entrada no hero (arte 3D + brilho amarelo/roxo). Hover só no CTA (glow amarelo curto). `prefers-reduced-motion: reduce` = estático.
 
 ## Imagery
 
-Artwork oficial de criaturas via PokéAPI (`official-artwork`), servido localmente em `/public/pokemon`. Hero usa stack de cartas com Pikachu, Charizard e Gengar; atmosfera com Mewtwo, Umbreon, Eevee e Dragonite; faixa de lineup entre hero e benefícios. Sem arte de carta TCG. Atribuição no rodapé.
+Hero: render 3D da marca em `/public/brand/pokemon-tcg-promo-hero.jpg` (Charizard, Pikachu, Gengar, Mewtwo + logo). Artwork oficial de criaturas via PokéAPI (`official-artwork`) na atmosfera e no lineup. Sem arte de carta TCG. Atribuição no rodapé.

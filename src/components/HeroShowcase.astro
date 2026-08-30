@@ -1,40 +1,16 @@
 ---
-import { products } from "../lib/products";
-
-const byId = (id: string) => products.find((item) => item.id === id);
-
-const combo = [
-  { id: "mewtwo-rocket", className: "combo-mewtwo" },
-  { id: "ferramentas-treinador", className: "combo-kit" },
-  { id: "treinador-avancado", className: "combo-etb" },
-  { id: "blister-caos", className: "combo-blister" },
-  { id: "escuridao-absoluta", className: "combo-display" },
-  { id: "sleeves-central", className: "combo-sleeves" },
-  { id: "tripack", className: "combo-tripack" },
-]
-  .map((slot) => ({ ...slot, item: byId(slot.id) }))
-  .filter((slot): slot is typeof slot & { item: NonNullable<typeof slot.item> } => Boolean(slot.item));
+import { asset } from "../lib/site";
 ---
 
 <figure class="hero-stage">
   <div class="hero-glow" aria-hidden="true"></div>
-  <div class="hero-combo">
-    {
-      combo.map((slot, index) => (
-        <img
-          class:list={["combo-item", slot.className]}
-          src={slot.item.src}
-          alt={slot.item.alt}
-          width="640"
-          height="800"
-          decoding="async"
-          fetchpriority={index === 4 ? "high" : "auto"}
-        />
-      ))
-    }
-  </div>
-  <figcaption class="hero-caption">
-    <span class="hero-caption-name">Combo do radar</span>
-    <span class="hero-caption-line">Boxes, coleções, blister, tripack e sleeves</span>
-  </figcaption>
+  <img
+    class="hero-lockup"
+    src={asset("brand/pokemon-tcg-promo-hero.jpg")}
+    alt="Arte 3D do Pokémon TCG Promo com Charizard, Pikachu, Gengar e Mewtwo em volta do logo amarelo com contorno azul, no fundo preto."
+    width="1024"
+    height="682"
+    decoding="async"
+    fetchpriority="high"
+  />
 </figure>

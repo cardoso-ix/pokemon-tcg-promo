@@ -10,6 +10,7 @@ interface Props {
 const title = Astro.props.title ?? `${site.name} — grupo de ofertas no WhatsApp`;
 const description = Astro.props.description ?? site.description;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
+const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toString();
 ---
 
 <!doctype html>
@@ -25,7 +26,9 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

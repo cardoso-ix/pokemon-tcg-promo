@@ -85,7 +85,7 @@ const steps = [
 
       <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-5 py-7 sm:gap-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10 lg:py-16">
         <div class="order-2 lg:order-1">
-          <p class="mb-3 font-display text-sm text-accent sm:mb-4">Mercado Livre · curadoria diária</p>
+          <p class="mb-3 font-display text-sm text-flame sm:mb-4">Mercado Livre · curadoria diária</p>
           <h1 class="font-display text-[clamp(1.7rem,7vw,4.15rem)] font-semibold leading-[1.08] text-ink">
             Ofertas de Pokémon TCG com preço comparado, no WhatsApp
           </h1>
@@ -96,7 +96,7 @@ const steps = [
           <ul class="mt-5 flex flex-wrap gap-2 sm:mt-6" aria-label="O que o grupo entrega">
             {
               ["Preço comparado", "Cupons", "Vagas ilimitadas", "Sem preço irreal"].map((item) => (
-                <li class="rounded-sm border border-accent/40 bg-primary-deep/50 px-3 py-1.5 text-sm text-ink">
+                <li class="rounded-sm border border-flame/45 bg-primary-deep/70 px-3 py-1.5 text-sm text-ink">
                   {item}
                 </li>
               ))
@@ -204,7 +204,7 @@ const steps = [
           {
             finds.map((item) => (
               <li class="grid gap-2 py-5 sm:grid-cols-[11rem_1fr] sm:gap-8">
-                <h3 class="font-display text-lg font-semibold text-accent">{item.title}</h3>
+                <h3 class="font-display text-lg font-semibold text-flame">{item.title}</h3>
                 <p class="text-muted">{item.text}</p>
               </li>
             ))
@@ -220,7 +220,7 @@ const steps = [
           {
             steps.map((text, i) => (
               <li class="relative">
-                <p class="font-display text-5xl text-accent/90">{i + 1}</p>
+                <p class="font-display text-5xl text-accent">{i + 1}</p>
                 <p class="mt-3 max-w-xs text-lg leading-relaxed text-ink">{text}</p>
               </li>
             ))
