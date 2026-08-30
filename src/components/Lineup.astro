@@ -1,0 +1,23 @@
+---
+import { lineup } from "../lib/pokemon";
+---
+
+<div class="overflow-hidden border-y border-ink/10 bg-primary-deep/40">
+  <ul class="mx-auto flex max-w-6xl items-end justify-between gap-3 px-5 py-5 sm:py-6" aria-label="Pokémon reconhecíveis do TCG">
+    {
+      lineup.map((mon) => (
+        <li class="min-w-0 flex-1">
+          <img
+            class="mx-auto h-14 w-14 object-contain sm:h-20 sm:w-20 lg:h-24 lg:w-24"
+            src={mon.src}
+            alt={mon.name}
+            width="475"
+            height="475"
+            loading="lazy"
+            decoding="async"
+          />
+        </li>
+      ))
+    }
+  </ul>
+</div>

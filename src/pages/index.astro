@@ -1,0 +1,296 @@
+---
+import Base from "../layouts/Base.astro";
+import JoinButton from "../components/JoinButton.astro";
+import Atmosphere from "../components/Atmosphere.astro";
+import Lineup from "../components/Lineup.astro";
+import HeroShowcase from "../components/HeroShowcase.astro";
+import { site } from "../lib/site";
+import { artworkCredit, pokemon } from "../lib/pokemon";
+
+const categories = [
+  {
+    title: "Boosters e Boxes",
+    text: "Ofertas em boosters e boxes de coleções — o que passou pela comparação de preço no Mercado Livre.",
+    mon: pokemon.charizard,
+  },
+  {
+    title: "Coleções Especiais",
+    text: "Edições limitadas e lançamentos com desconto, quando o valor faz sentido depois da curadoria.",
+    mon: pokemon.mewtwo,
+  },
+  {
+    title: "Acessórios",
+    text: "Sleeves, deck boxes e outros itens de proteção e jogo, com preço conferido antes de ir ao grupo.",
+    mon: pokemon.eevee,
+  },
+  {
+    title: "Ofertas Diárias",
+    text: "Produto novo e melhor preço ao longo do dia. O grupo atualiza quando aparece oportunidade, não só de manhã.",
+    mon: pokemon.pikachu,
+  },
+  {
+    title: "Cupons selecionados",
+    text: "Cupons do Mercado Livre quando valem a pena — só entram se o desconto fecha com o preço comparado.",
+    mon: pokemon.umbreon,
+  },
+];
+
+const finds = [
+  {
+    title: "Promoções verificadas",
+    text: "Cada oferta passa por comparação de preço antes de ir para o grupo.",
+  },
+  {
+    title: "Monitoramento diário",
+    text: "Ofertas acompanhadas todo dia no Mercado Livre — não é lista morta.",
+  },
+  {
+    title: "Corte de preço irreal",
+    text: "Curadoria contra anúncio inflado. Se o valor não faz sentido, não entra.",
+  },
+  {
+    title: "Atualização ao longo do dia",
+    text: "O grupo se move quando aparece oportunidade, não só de manhã.",
+  },
+  {
+    title: "Cupons",
+    text: "Cupons selecionados quando o desconto faz sentido. Sem lista vazia de código inútil.",
+  },
+];
+
+const steps = [
+  "Você entra de graça no grupo do WhatsApp. Vagas ilimitadas.",
+  "Recebe ofertas selecionadas de cartas Pokémon no Mercado Livre.",
+  "Fecha a compra direto no vendedor, no preço que foi conferido.",
+];
+---
+
+<Base>
+  <header class="border-b border-ink/10">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
+      <p class="font-display text-sm font-semibold tracking-wide text-ink sm:text-base">
+        {site.name}
+      </p>
+      <p class="shrink-0 text-xs text-muted sm:text-sm">
+        <span class="sm:hidden">Vagas ilimitadas</span>
+        <span class="hidden sm:inline">Grupo gratuito · vagas ilimitadas</span>
+      </p>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="relative overflow-hidden">
+      <div class="pointer-events-none absolute inset-y-0 left-0 hidden w-[42%] bg-primary-deep/80 lg:block"></div>
+      <Atmosphere />
+
+      <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-5 py-7 sm:gap-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10 lg:py-16">
+        <div class="order-2 lg:order-1">
+          <p class="mb-3 font-display text-sm text-accent sm:mb-4">Mercado Livre · curadoria diária</p>
+          <h1 class="font-display text-[clamp(1.7rem,7vw,4.15rem)] font-semibold leading-[1.08] text-ink">
+            Ofertas de Pokémon TCG com preço comparado, no WhatsApp
+          </h1>
+          <p class="measure mt-4 text-base leading-relaxed text-muted sm:mt-5 sm:text-lg">
+            Boosters, boxes, coleções especiais, acessórios, cupons e ofertas do dia — selecionados no Mercado Livre, com atualização diária e curadoria de preços.
+          </p>
+
+          <ul class="mt-5 flex flex-wrap gap-2 sm:mt-6" aria-label="O que o grupo entrega">
+            {
+              ["Preço comparado", "Cupons", "Vagas ilimitadas", "Sem preço irreal"].map((item) => (
+                <li class="rounded-sm border border-accent/40 bg-primary-deep/50 px-3 py-1.5 text-sm text-ink">
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-6 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
+            <JoinButton class="w-full sm:w-auto" />
+            <a class="cta-ghost justify-center sm:justify-start" href={site.partnerStore} target="_blank" rel="noopener noreferrer">
+              Ver loja parceira no Mercado Livre
+            </a>
+          </div>
+
+          <p class="mt-4 text-sm text-muted sm:mt-5">Gratuito · Vagas ilimitadas · Sem spam · Compra no vendedor</p>
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <HeroShowcase />
+        </div>
+      </div>
+    </section>
+
+    <Lineup />
+
+    <section class="border-t border-ink/10" aria-labelledby="categorias-titulo">
+      <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+        <div class="max-w-2xl">
+          <h2 id="categorias-titulo" class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold leading-tight">
+            O que o grupo acha de ofertas
+          </h2>
+          <p class="measure mt-4 text-lg text-muted">
+            Estes são os tipos de produto que entram no WhatsApp depois da curadoria.
+          </p>
+        </div>
+
+        <ol class="mt-10 divide-y divide-ink/12 border-y border-ink/12">
+          {
+            categories.map((item) => (
+              <li class="grid items-center gap-4 py-6 sm:grid-cols-[5.5rem_minmax(11rem,16rem)_1fr] sm:gap-8">
+                <img
+                  class="h-14 w-14 object-contain sm:h-16 sm:w-16"
+                  src={item.mon.src}
+                  alt=""
+                  width="475"
+                  height="475"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <h3 class="font-display text-xl font-semibold text-ink sm:text-2xl">{item.title}</h3>
+                <p class="text-muted">{item.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="bg-surface" aria-labelledby="origem-titulo">
+      <div class="mx-auto max-w-6xl px-5 py-14 lg:py-16">
+        <h2 id="origem-titulo" class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold leading-tight">
+          Lojas que acompanhamos
+        </h2>
+        <p class="measure mt-4 text-lg text-muted">
+          O grupo monitora ofertas nessas plataformas. A loja parceira continua sendo o Mercado Livre. A compra é no vendedor, não no grupo.
+        </p>
+        <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Lojas monitoradas">
+          <li>
+            <span class="store-pill">Amazon</span>
+          </li>
+          <li>
+            <a
+              class="store-pill store-pill-link"
+              href={site.partnerStore}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mercado Livre
+            </a>
+          </li>
+          <li>
+            <span class="store-pill">Magalu</span>
+          </li>
+          <li>
+            <span class="store-pill">Shopee</span>
+          </li>
+          <li>
+            <span class="store-pill">e muito mais</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="border-t border-ink/10">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:py-20">
+        <div>
+          <h2 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold leading-tight">
+            Como o preço é olhado
+          </h2>
+          <p class="measure mt-4 text-muted">
+            Não é vitrine infinita. É recorte: o que passou pela comparação e ainda vale a pena agora.
+          </p>
+        </div>
+
+        <ol class="divide-y divide-ink/12 border-y border-ink/12">
+          {
+            finds.map((item) => (
+              <li class="grid gap-2 py-5 sm:grid-cols-[11rem_1fr] sm:gap-8">
+                <h3 class="font-display text-lg font-semibold text-accent">{item.title}</h3>
+                <p class="text-muted">{item.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="bg-primary-deep">
+      <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+        <h2 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold">Como funciona</h2>
+        <ol class="mt-10 grid gap-8 md:grid-cols-3 md:gap-6">
+          {
+            steps.map((text, i) => (
+              <li class="relative">
+                <p class="font-display text-5xl text-accent/90">{i + 1}</p>
+                <p class="mt-3 max-w-xs text-lg leading-relaxed text-ink">{text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="border-t border-ink/10">
+      <div class="mx-auto max-w-6xl px-5 py-16 lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-12 lg:py-20">
+        <div>
+          <h2 class="font-display text-[clamp(1.7rem,4vw,2.6rem)] font-semibold leading-tight">
+            Buscando um produto específico?
+          </h2>
+          <p class="measure mt-4 text-lg text-muted">
+            Chama no WhatsApp privado. A gente busca o melhor preço disponível naquele momento.
+          </p>
+        </div>
+        <div class="mt-8 lg:mt-0 lg:justify-self-end">
+          <JoinButton href={site.whatsappPersonalOrder} label="Chamar no privado" />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-surface">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="font-display text-2xl font-semibold">Loja parceira</h2>
+          <p class="mt-2 max-w-xl text-muted">
+            Além do grupo, você pode ver o catálogo na loja parceira do Mercado Livre.
+          </p>
+        </div>
+        <a class="cta" href={site.partnerStore} target="_blank" rel="noopener noreferrer">
+          Abrir loja no Mercado Livre
+        </a>
+      </div>
+    </section>
+
+    <section class="border-t border-ink/10">
+      <div class="mx-auto max-w-6xl px-5 py-16 text-center lg:py-20">
+        <h2 class="mx-auto max-w-3xl font-display text-[clamp(1.8rem,4.2vw,3rem)] font-semibold leading-tight">
+          Entra no grupo. O preço já foi olhado.
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-muted">
+          Pokémon TCG Promo é gratuito, com vagas ilimitadas, e feito pra quem não quer perder a tarde caçando anúncio.
+        </p>
+        <div class="mt-8 flex justify-center">
+          <JoinButton />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-ink/10">
+    <div class="mx-auto max-w-6xl space-y-6 px-5 py-10">
+      <p class="max-w-3xl text-sm leading-relaxed text-muted">
+        Aviso: as compras são realizadas diretamente nas plataformas e vendedores. O {site.name} apenas
+        compartilha ofertas e oportunidades. Boas compras.
+      </p>
+      <p class="max-w-3xl text-xs leading-relaxed text-muted/80">{artworkCredit}</p>
+      <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+        <p>© {new Date().getFullYear()} {site.name}</p>
+        <a class="cta-ghost" href={site.whatsappGroup} target="_blank" rel="noopener noreferrer">
+          Abrir grupo no WhatsApp
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sticky-cta lg:hidden">
+    <JoinButton class="w-full" />
+  </div>
+</Base>

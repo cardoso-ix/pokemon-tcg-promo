@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pokemon-tcg-promo.pages.dev/sitemap.xml

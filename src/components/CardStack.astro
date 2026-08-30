@@ -1,0 +1,78 @@
+---
+import { pokemon } from "../lib/pokemon";
+
+const cards = [
+  {
+    mon: pokemon.charizard,
+    rot: "-14deg",
+    left: "18%",
+    top: "3.2rem",
+    z: 1,
+    label: "Box",
+    stamp: "preço conferido",
+  },
+  {
+    mon: pokemon.gengar,
+    rot: "-2deg",
+    left: "38%",
+    top: "1.6rem",
+    z: 2,
+    label: "Booster",
+    stamp: "monitorado hoje",
+  },
+  {
+    mon: pokemon.pikachu,
+    rot: "10deg",
+    left: "52%",
+    top: "2.4rem",
+    z: 3,
+    label: "Carta",
+    stamp: "sem valor irreal",
+  },
+];
+---
+
+<div class="relative mx-auto h-[20rem] w-full max-w-[18.5rem] overflow-hidden sm:h-[26rem] sm:max-w-[24rem] lg:h-[28rem] lg:max-w-[26rem] lg:overflow-visible">
+  <img
+    class="pointer-events-none absolute -right-4 -top-6 w-40 opacity-20 sm:w-52"
+    src={pokemon.mewtwo.src}
+    alt=""
+    width="475"
+    height="475"
+    decoding="async"
+  />
+
+  <div class="absolute inset-x-2 top-10 h-56 rounded-full border border-dashed border-accent/30 sm:h-72"></div>
+
+  {
+    cards.map((card) => (
+      <article
+        class="card-fan absolute w-[8.1rem] overflow-hidden rounded-xl border border-ink/15 shadow-[0_18px_40px_oklch(0_0_0/0.5)] sm:w-[11rem] lg:w-[12rem]"
+        style={`--rest-rot: ${card.rot}; left: ${card.left}; top: ${card.top}; z-index: ${card.z}; transform: rotate(${card.rot});`}
+      >
+        <div class:list={["relative aspect-[5/7]", card.z === 3 ? "holo" : "bg-surface"]}>
+          <div class="absolute inset-0 bg-primary-deep/75"></div>
+          <div class="relative flex h-full flex-col justify-between p-2.5 sm:p-3">
+            <p class="font-display text-[0.65rem] uppercase tracking-[0.14em] text-ink/85">{card.label}</p>
+            <img
+              class="mx-auto w-[90%] drop-shadow-[0_10px_18px_oklch(0_0_0/0.45)]"
+              src={card.mon.src}
+              alt={card.mon.name}
+              width="475"
+              height="475"
+              decoding="async"
+            />
+            <div>
+              <p class="font-display text-sm font-semibold text-ink">{card.mon.name}</p>
+              <p class="font-display text-[0.68rem] text-accent">{card.stamp}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))
+  }
+
+  <p class="absolute bottom-1 left-1/2 z-[4] -translate-x-1/2 rounded-sm bg-primary px-3 py-1.5 font-display text-xs uppercase tracking-[0.14em] text-ink">
+    preço comparado
+  </p>
+</div>

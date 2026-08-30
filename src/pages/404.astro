@@ -1,0 +1,26 @@
+---
+import Base from "../layouts/Base.astro";
+import JoinButton from "../components/JoinButton.astro";
+import { pokemon } from "../lib/pokemon";
+---
+
+<Base title="Página não encontrada — Pokémon TCG Promo">
+  <main id="conteudo" class="mx-auto flex min-h-[80dvh] max-w-3xl flex-col justify-center px-5 py-20">
+    <img
+      class="mb-6 h-24 w-24 object-contain"
+      src={pokemon.pikachu.src}
+      alt="Pikachu"
+      width="475"
+      height="475"
+    />
+    <p class="font-display text-accent">404</p>
+    <h1 class="mt-3 font-display text-4xl font-semibold">Essa página não existe.</h1>
+    <p class="mt-4 max-w-md text-muted">
+      Volte para a landing ou entre direto no grupo de ofertas.
+    </p>
+    <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <a class="cta-ghost" href={import.meta.env.BASE_URL}>Voltar ao início</a>
+      <JoinButton />
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,30 @@
+---
+import { pokemon } from "../lib/pokemon";
+---
+
+<div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+  <img
+    class="absolute -left-8 bottom-0 hidden w-36 opacity-10 lg:block lg:-left-4 lg:w-44"
+    src={pokemon.umbreon.src}
+    alt=""
+    width="475"
+    height="475"
+    decoding="async"
+  />
+  <img
+    class="absolute -right-4 top-10 hidden w-24 opacity-10 lg:right-auto lg:left-[38%] lg:top-8 lg:block lg:w-28"
+    src={pokemon.eevee.src}
+    alt=""
+    width="475"
+    height="475"
+    decoding="async"
+  />
+  <img
+    class="absolute bottom-6 right-[4%] hidden w-20 opacity-10 lg:block"
+    src={pokemon.dragonite.src}
+    alt=""
+    width="475"
+    height="475"
+    decoding="async"
+  />
+</div>
