@@ -88,6 +88,11 @@ li {
   max-width: 38rem;
 }
 
+.poster .measure,
+.text-center .measure {
+  margin-inline: auto;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
@@ -143,6 +148,7 @@ li {
 .cta-ghost {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 2.75rem;
   color: var(--color-ink);
   text-decoration: underline;

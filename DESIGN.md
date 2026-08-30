@@ -32,12 +32,11 @@ Voz física: etiqueta de preço de camelô + ficha de torneio.
 
 ## Layout
 
-- Mobile-first, coluna única até 720px
-- Desktop: hero assimétrico (copy + CTA à esquerda, arte 3D à direita)
-- Ritmo: grupo apertado (headline + pills + botão), respiro largo entre seções
-- Sem grade de 4 cards iguais. Categorias de oferta e curadoria em lista/quadro tipográfico
-- Origem das ofertas: só Mercado Livre + curadoria (sem inventar outras lojas)
+- Uma tela, uma ação: arte 3D + o que o grupo faz + CTA do WhatsApp
+- Mobile-first, coluna única, texto e blocos centralizados (poster)
+- Desktop: o mesmo eixo central, `max-w-3xl` — sem seções extras
 - CTA sticky no rodapé só no mobile
+- Loja ML e WhatsApp privado: links secundários, não seções
 
 ## Components
 
