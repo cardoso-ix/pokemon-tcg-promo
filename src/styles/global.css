@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: oklch(0.08 0 0);
-  --color-surface: oklch(0.18 0.04 310);
-  --color-ink: oklch(0.96 0.02 98);
-  --color-muted: oklch(0.8 0.04 285);
+  --color-bg: oklch(0.92 0.022 310);
+  --color-surface: oklch(0.86 0.03 310);
+  --color-ink: oklch(0.22 0.04 310);
+  --color-muted: oklch(0.38 0.04 310);
   --color-primary: oklch(0.42 0.09 310);
-  --color-primary-deep: oklch(0.22 0.07 310);
+  --color-primary-deep: oklch(0.32 0.08 310);
   --color-accent: oklch(0.88 0.18 98);
   --color-accent-ink: oklch(0.18 0.05 55);
-  --color-flame: oklch(0.7 0.16 52);
-  --color-mark: oklch(0.5 0.13 250);
-  --color-psychic: oklch(0.78 0.04 285);
+  --color-flame: oklch(0.5 0.15 48);
+  --color-mark: oklch(0.42 0.13 250);
+  --color-psychic: oklch(0.55 0.06 285);
   --font-display: "Tektur", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
 }
@@ -41,7 +41,7 @@ body {
     repeating-linear-gradient(
       -18deg,
       transparent 0 11px,
-      oklch(0.42 0.09 310 / 0.06) 11px 12px
+      oklch(0.42 0.09 310 / 0.07) 11px 12px
     ),
     var(--color-bg);
 }
@@ -215,8 +215,8 @@ li {
   min-height: 2.75rem;
   padding: 0.45rem 1.15rem;
   border-radius: 999px;
-  border: 1px solid oklch(0.5 0.13 250 / 0.45);
-  background: oklch(0.2 0.05 310);
+  border: 1px solid oklch(0.42 0.13 250 / 0.4);
+  background: oklch(0.97 0.015 310);
   color: var(--color-ink);
   font-weight: 700;
   font-size: 0.95rem;
@@ -225,8 +225,8 @@ li {
 }
 
 .store-pill-link:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-flame);
+  color: var(--color-flame);
 }
 
 .product-cut {
@@ -241,7 +241,7 @@ li {
   padding: 0;
   overflow: hidden;
   border-radius: 1.15rem;
-  background: var(--color-bg);
+  background: oklch(0.08 0 0);
 }
 
 .hero-glow {
@@ -302,8 +302,8 @@ li {
   bottom: 0;
   z-index: var(--z-sticky);
   padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-  background: oklch(0.08 0 0 / 0.94);
-  border-top: 1px solid oklch(0.88 0.18 98 / 0.28);
+  background: oklch(0.92 0.022 310 / 0.96);
+  border-top: 1px solid oklch(0.5 0.15 48 / 0.28);
 }
 
 @media (max-width: 1023px) {

@@ -2,25 +2,25 @@
 
 ## Visual Theme
 
-Landing de conversão noturna. Cena: o render 3D da marca no escuro — Charizard, Pikachu, Gengar e Mewtwo em volta do logo amarelo. A página é um **quadro de ofertas**, não um fã-clube. Estratégia de cor: **Full palette** extraída da arte da hero — preto carrega o campo; amarelo do Pikachu aponta a ação; laranja, roxo e lilás sustentam as seções.
+Landing de conversão clara. Cena: o render 3D (fundo preto) pousa num campo lilás-Gengar, não num preto fechado. A página é um **quadro de ofertas**, não um fã-clube. Estratégia de cor: **Full palette** — superfície clara tintada no roxo da arte (não cream/sand); amarelo Pikachu aponta a ação; laranja Charizard nos kickers.
 
 ## Color
 
-Paleta da arte 3D (não do seed cobalto). Fundo preto da imagem. CTA amarelo com tinta escura (contraste AA no botão).
+Paleta da arte 3D em superfície clara. Neutros no hue 310 (Gengar). CTA amarelo com tinta escura. Corpo ≥4.5:1 no fundo.
 
 | Token | OKLCH | Origem | Uso |
 |---|---|---|---|
-| `--bg` | `oklch(0.08 0 0)` | Fundo da arte | Página |
-| `--surface` | `oklch(0.18 0.04 310)` | Gengar | Painéis |
-| `--ink` | `oklch(0.96 0.02 98)` | Amarelo do logo, quase branco | Texto |
-| `--muted` | `oklch(0.80 0.04 285)` | Lilás do Mewtwo | Secundário (≥4.5:1 no preto) |
+| `--bg` | `oklch(0.92 0.022 310)` | Lilás Gengar claro | Página |
+| `--surface` | `oklch(0.86 0.03 310)` | Gengar | Pills, painéis |
+| `--ink` | `oklch(0.22 0.04 310)` | Gengar escuro | Texto |
+| `--muted` | `oklch(0.38 0.04 310)` | Gengar médio | Secundário (≥4.5:1) |
 | `--primary` | `oklch(0.42 0.09 310)` | Gengar | Campos de marca |
-| `--primary-deep` | `oklch(0.22 0.07 310)` | Gengar escuro | Faixas, hero esquerdo |
+| `--primary-deep` | `oklch(0.32 0.08 310)` | Gengar escuro | Ênfase |
 | `--accent` | `oklch(0.88 0.18 98)` | Pikachu / logo | CTA, pulso |
 | `--accent-ink` | `oklch(0.18 0.05 55)` | Sombra do Charizard | Texto no amarelo |
-| `--flame` | `oklch(0.70 0.16 52)` | Charizard | Kickers, números, hover |
-| `--mark` | `oklch(0.50 0.13 250)` | Contorno azul do logo | Bordas, pills |
-| `--psychic` | `oklch(0.78 0.04 285)` | Corpo do Mewtwo | Destaque lilás |
+| `--flame` | `oklch(0.50 0.15 48)` | Charizard (escurecido p/ AA) | Kickers, hover |
+| `--mark` | `oklch(0.42 0.13 250)` | Contorno azul do logo | Bordas, pills |
+| `--psychic` | `oklch(0.55 0.06 285)` | Mewtwo | Destaque |
 
 ## Typography
 
@@ -36,7 +36,8 @@ Voz física: etiqueta de preço de camelô + ficha de torneio.
 - Mobile-first, coluna única, texto e blocos centralizados (poster)
 - Desktop: o mesmo eixo central, `max-w-3xl` — sem seções extras
 - CTA sticky no rodapé só no mobile
-- Loja ML e WhatsApp privado: links secundários, não seções
+- Loja ML e WhatsApp privado: links secundários
+- Bloco curto de lojas monitoradas (Amazon, ML, Magalu, Shopee, e muito mais); só o ML é link
 
 ## Components
 

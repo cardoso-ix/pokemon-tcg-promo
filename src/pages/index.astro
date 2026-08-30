@@ -34,7 +34,7 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
         <ul class="mt-5 flex flex-wrap justify-center gap-2" aria-label="O que o grupo entrega">
           {
             bullets.map((item) => (
-              <li class="rounded-sm border border-flame/45 bg-primary-deep/70 px-3 py-1.5 text-sm text-ink">
+              <li class="rounded-sm border border-flame/40 bg-surface px-3 py-1.5 text-sm text-ink">
                 {item}
               </li>
             ))
@@ -51,6 +51,37 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
               Pedido no privado
             </a>
           </p>
+        </div>
+
+        <div class="mt-10 w-full border-t border-ink/10 pt-8">
+          <h2 class="font-display text-lg font-semibold text-ink">Lojas que acompanhamos</h2>
+          <p class="measure mx-auto mt-2 text-sm leading-relaxed text-muted sm:text-base">
+            O grupo monitora ofertas nessas plataformas. A compra é no vendedor, não no grupo.
+          </p>
+          <ul class="mt-4 flex flex-wrap justify-center gap-2" aria-label="Lojas monitoradas">
+            <li>
+              <span class="store-pill">Amazon</span>
+            </li>
+            <li>
+              <a
+                class="store-pill store-pill-link"
+                href={site.partnerStore}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Mercado Livre
+              </a>
+            </li>
+            <li>
+              <span class="store-pill">Magalu</span>
+            </li>
+            <li>
+              <span class="store-pill">Shopee</span>
+            </li>
+            <li>
+              <span class="store-pill">e muito mais</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
