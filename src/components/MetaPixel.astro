@@ -1,0 +1,87 @@
+---
+const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485").replace(
+  /\D/g,
+  "",
+);
+---
+
+{
+  pixelId && (
+    <>
+      <script is:inline define:vars={{ pixelId }}>
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", pixelId);
+        fbq("track", "PageView");
+      </script>
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style="display:none"
+          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
+      <script is:inline>
+        document.addEventListener("click", function (event) {
+          var target = event.target;
+          if (!(target instanceof Element)) return;
+          var link = target.closest("a");
+          if (!link || typeof fbq !== "function") return;
+
+          var raw = (link.getAttribute("href") || "").trim();
+          if (!raw || raw === "#conteudo") return;
+
+          var destination = link.href || raw;
+          var host = "";
+          try {
+            host = new URL(destination, window.location.href).hostname.replace(/^www\./, "");
+          } catch (err) {
+            host = "";
+          }
+
+          var content_name = (link.innerText || link.textContent || "")
+            .replace(/\s+/g, " ")
+            .trim();
+          if (!content_name) {
+            content_name = link.getAttribute("aria-label") || destination;
+          }
+
+          if (host === "chat.whatsapp.com") {
+            fbq("track", "Lead");
+            fbq("trackCustom", "ButtonClick", {
+              content_name: content_name,
+              destination: destination,
+            });
+            return;
+          }
+
+          if (host === "wa.me" || host === "api.whatsapp.com") {
+            fbq("track", "Contact");
+            return;
+          }
+
+          fbq("trackCustom", "ButtonClick", {
+            content_name: content_name,
+            destination: destination,
+          });
+        });
+      </script>
+    </>
+  )
+}

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import MetaPixel from "../components/MetaPixel.astro";
 import { site } from "../lib/site";
 
 interface Props {
@@ -36,6 +37,7 @@ const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toSt
       href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Tektur:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+    <MetaPixel />
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
