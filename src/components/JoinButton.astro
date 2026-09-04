@@ -8,19 +8,20 @@ interface Props {
 }
 
 const {
-  label = "Entrar no grupo no WhatsApp",
+  label = "Quero entrar no grupo",
   class: className = "",
-  href = site.whatsappGroup,
+  href = site.enterHref,
 } = Astro.props;
 
-const isGroupCta = href === site.whatsappGroup;
+const isExternal = /^https?:\/\//.test(href);
+const isPrimaryCta = href === site.enterHref;
 ---
 
 <a
-  class:list={["cta", isGroupCta && "cta-pulse", className]}
+  class:list={["cta", isPrimaryCta && "cta-pulse", className]}
   href={href}
-  target="_blank"
-  rel="noopener noreferrer"
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
 >
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
     <path

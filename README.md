@@ -1,6 +1,6 @@
 # Pokémon TCG Promo
 
-Landing para captar entrada no grupo WhatsApp de ofertas de cartas Pokémon no Mercado Livre.
+Landing com quiz para captar **leads quentes** (quem já compra TCG) no grupo WhatsApp de ofertas de cartas Pokémon no Mercado Livre. O convite do grupo só aparece depois da qualificação no n8n.
 
 ## Stack
 

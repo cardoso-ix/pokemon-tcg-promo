@@ -63,7 +63,7 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
           }
 
           if (host === "chat.whatsapp.com") {
-            fbq("track", "Lead");
+            fbq("track", "CompleteRegistration");
             fbq("trackCustom", "ButtonClick", {
               content_name: content_name,
               destination: destination,

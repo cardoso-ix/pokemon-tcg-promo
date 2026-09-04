@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+
+<Base
+  title={`Obrigado — ${site.name}`}
+  description="Recebemos sua resposta. Se você já compra TCG, o convite do grupo aparece aqui."
+>
+  <main id="conteudo" class="mx-auto flex min-h-[80dvh] max-w-xl flex-col justify-center px-5 py-16">
+    <div id="lead-quente" hidden>
+      <p class="font-display text-sm text-flame">Lead quente</p>
+      <h1 class="mt-2 font-display text-[clamp(1.7rem,6vw,2.8rem)] font-semibold leading-tight">
+        Entra no grupo de ofertas
+      </h1>
+      <p class="measure mt-4 text-base leading-relaxed text-muted">
+        Você já compra TCG — o convite é este. Ofertas com preço comparado, atualização ao longo do dia. A compra é no vendedor.
+      </p>
+      <a id="group-cta" class="cta cta-pulse mt-7 inline-flex" href="#" target="_blank" rel="noopener noreferrer">
+        Entrar no grupo no WhatsApp
+      </a>
+    </div>
+
+    <div id="lead-frio">
+      <p class="font-display text-sm text-flame">Recebido</p>
+      <h1 class="mt-2 font-display text-[clamp(1.7rem,6vw,2.8rem)] font-semibold leading-tight">
+        Esse grupo é para quem já compra
+      </h1>
+      <p class="measure mt-4 text-base leading-relaxed text-muted">
+        Por enquanto o convite fica fechado. Quando você começar a comprar booster, box ou carta, volta aqui. Enquanto isso, acompanha as ofertas no Instagram ou pede um produto no privado.
+      </p>
+      <p class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="cta" href={site.instagram} target="_blank" rel="noopener noreferrer">Ver Instagram</a>
+        <a class="cta-ghost" href={site.whatsappPersonalOrder} target="_blank" rel="noopener noreferrer">
+          Pedido no privado
+        </a>
+      </p>
+    </div>
+
+    <p class="mt-10">
+      <a class="cta-ghost" href={import.meta.env.BASE_URL}>Voltar ao início</a>
+    </p>
+  </main>
+</Base>
+
+<script is:inline>
+  (function () {
+    var hot = document.getElementById("lead-quente");
+    var cold = document.getElementById("lead-frio");
+    var cta = document.getElementById("group-cta");
+    if (!hot || !cold || !cta) return;
+
+    var stored = null;
+    try {
+      stored = JSON.parse(sessionStorage.getItem("tcgLead") || "null");
+    } catch (err) {
+      stored = null;
+    }
+
+    var groupUrl = stored && stored.status === "quente" ? String(stored.groupUrl || "") : "";
+    var isHot = /^https:\/\/chat\.whatsapp\.com\//.test(groupUrl);
+
+    if (isHot) {
+      hot.hidden = false;
+      cold.hidden = true;
+      cta.href = groupUrl;
+      if (typeof fbq === "function") {
+        var already = false;
+        try {
+          already = sessionStorage.getItem("tcgLeadPixel") === "1";
+        } catch (err) {}
+        if (!already) {
+          fbq("track", "Lead");
+          try {
+            sessionStorage.setItem("tcgLeadPixel", "1");
+          } catch (err) {}
+        }
+      }
+      return;
+    }
+
+    hot.hidden = true;
+    cold.hidden = false;
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import JoinButton from "../components/JoinButton.astro";
+import QualifyForm from "../components/QualifyForm.astro";
 import HeroShowcase from "../components/HeroShowcase.astro";
 import { site } from "../lib/site";
 import { artworkCredit } from "../lib/pokemon";
@@ -52,6 +53,13 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
             </a>
           </p>
         </div>
+      </div>
+    </section>
+
+    <QualifyForm />
+
+    <section class="relative overflow-hidden">
+      <div class="relative mx-auto flex max-w-3xl flex-col items-center px-5 pb-8 text-center sm:pb-12 lg:pb-16">
 
         <div class="mt-10 w-full border-t border-ink/10 pt-8">
           <h2 class="font-display text-lg font-semibold text-ink">Lojas que acompanhamos</h2>
@@ -90,7 +98,7 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
   <footer class="border-t border-ink/10">
     <div class="mx-auto max-w-xl space-y-4 px-5 py-8 text-center">
       <p class="text-sm leading-relaxed text-muted">
-        A compra é no vendedor, nas plataformas. O {site.name} só compartilha ofertas.
+        A compra é no vendedor, nas plataformas. O {site.name} só compartilha ofertas como afiliado. Não somos canal oficial Pokémon.
       </p>
       <p class="text-xs leading-relaxed text-muted/80">{artworkCredit}</p>
       <p class="text-sm text-muted">© {new Date().getFullYear()} {site.name}</p>
