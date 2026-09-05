@@ -14,7 +14,7 @@ export const site = {
   tagline: "Ofertas selecionadas de cartas Pokémon no Mercado Livre",
   description:
     "Ofertas selecionadas de cartas Pokémon no Mercado Livre, com atualização diária e curadoria de preços. Entre no grupo do WhatsApp.",
-  url: "https://cardoso-ix.github.io/pokemon-tcg-promo",
+  url: "https://pokemontcgpromo.com.br",
   enterHref: `${import.meta.env.BASE_URL}#entrar`,
   leadWebhook:
     import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ??

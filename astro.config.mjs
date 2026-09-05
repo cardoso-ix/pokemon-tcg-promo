@@ -4,11 +4,11 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
-const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
+const isProduction = process.env.GITHUB_ACTIONS === "true";
 
 export default defineConfig({
-  site: isGitHubPages ? "https://cardoso-ix.github.io" : "http://localhost:4321",
-  base: isGitHubPages ? "/pokemon-tcg-promo/" : "/",
+  site: isProduction ? "https://pokemontcgpromo.com.br" : "http://localhost:4321",
+  base: "/",
   vite: {
     plugins: [tailwindcss()]
   }
