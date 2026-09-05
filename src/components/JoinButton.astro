@@ -7,14 +7,19 @@ interface Props {
   href?: string;
 }
 
+const defaultHref = site.leadQuenteEnabled ? site.enterHref : site.whatsappGroup;
+const defaultLabel = site.leadQuenteEnabled
+  ? "Quero entrar no grupo"
+  : "Entrar no grupo no WhatsApp";
+
 const {
-  label = "Quero entrar no grupo",
+  label = defaultLabel,
   class: className = "",
-  href = site.enterHref,
+  href = defaultHref,
 } = Astro.props;
 
 const isExternal = /^https?:\/\//.test(href);
-const isPrimaryCta = href === site.enterHref;
+const isPrimaryCta = href === defaultHref;
 ---
 
 <a

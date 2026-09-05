@@ -56,7 +56,8 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
       </div>
     </section>
 
-    <QualifyForm />
+    {/* desativado; religar neste flag: site.leadQuenteEnabled */}
+    {site.leadQuenteEnabled && <QualifyForm />}
 
     <section class="relative overflow-hidden">
       <div class="relative mx-auto flex max-w-3xl flex-col items-center px-5 pb-8 text-center sm:pb-12 lg:pb-16">

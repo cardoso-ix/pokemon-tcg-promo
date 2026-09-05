@@ -2,6 +2,10 @@
 import Base from "../layouts/Base.astro";
 import QualifyForm from "../components/QualifyForm.astro";
 import { site } from "../lib/site";
+
+if (!site.leadQuenteEnabled) {
+  return Astro.redirect(import.meta.env.BASE_URL);
+}
 ---
 
 <Base

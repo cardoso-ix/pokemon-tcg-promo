@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import JoinButton from "../components/JoinButton.astro";
 import { pokemon } from "../lib/pokemon";
+import { site } from "../lib/site";
 ---
 
 <Base title="Página não encontrada — Pokémon TCG Promo">
@@ -16,11 +17,13 @@ import { pokemon } from "../lib/pokemon";
     <p class="font-display text-accent">404</p>
     <h1 class="mt-3 font-display text-4xl font-semibold">Essa página não existe.</h1>
     <p class="mt-4 max-w-md text-muted">
-      Volte para a landing e responda o quiz se quiser o grupo de ofertas.
+      {site.leadQuenteEnabled
+        ? "Volte para a landing e responda o quiz se quiser o grupo de ofertas."
+        : "Volte para a landing ou entre direto no grupo de ofertas no WhatsApp."}
     </p>
     <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
       <a class="cta-ghost" href={import.meta.env.BASE_URL}>Voltar ao início</a>
-      <JoinButton href={`${import.meta.env.BASE_URL}#entrar`} />
+      <JoinButton />
     </div>
   </main>
 </Base>
