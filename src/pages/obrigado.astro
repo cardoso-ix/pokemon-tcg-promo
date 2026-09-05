@@ -1,6 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import { site } from "../lib/site";
+
+const instagramHref = site.instagram;
 ---
 
 <Base
@@ -43,7 +45,7 @@ import { site } from "../lib/site";
   </main>
 </Base>
 
-<script is:inline>
+<script is:inline define:vars={{ instagramHref }}>
   (function () {
     var hot = document.getElementById("lead-quente");
     var cold = document.getElementById("lead-frio");
@@ -81,5 +83,6 @@ import { site } from "../lib/site";
 
     hot.hidden = true;
     cold.hidden = false;
+    window.location.href = instagramHref;
   })();
 </script>

@@ -9,6 +9,7 @@ interface Props {
 const { heading = "Responde em 20 segundos para entrar" } = Astro.props;
 const webhook = site.leadWebhook;
 const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
+const instagramHref = site.instagram;
 ---
 
 <section id="entrar" class="qualify" aria-labelledby="entrar-titulo">
@@ -81,13 +82,17 @@ const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
   </div>
 </section>
 
-<script is:inline define:vars={{ webhook, obrigadoHref }}>
+<script is:inline define:vars={{ webhook, obrigadoHref, instagramHref }}>
   (function () {
     var form = document.getElementById("qualify-form");
     var errorEl = document.getElementById("qualify-error");
     var submitBtn = document.getElementById("qualify-submit");
     var buyField = document.getElementById("campo-compra");
     if (!form || !errorEl || !submitBtn) return;
+
+    function goInstagram() {
+      window.location.href = instagramHref;
+    }
 
     function showError(message) {
       errorEl.hidden = false;
@@ -113,8 +118,12 @@ const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
 
     form.addEventListener("change", function () {
       var selected = form.querySelector('input[name="ja_compra"]:checked');
+      if (selected && selected.value === "nao") {
+        goInstagram();
+        return;
+      }
       if (!buyField) return;
-      buyField.hidden = !!(selected && selected.value === "nao");
+      buyField.hidden = false;
     });
 
     form.addEventListener("submit", function (event) {
@@ -131,11 +140,15 @@ const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
         showError("Escreve seu nome.");
         return;
       }
-      if (jaCompra !== "sim" && jaCompra !== "nao") {
+      if (jaCompra === "nao") {
+        goInstagram();
+        return;
+      }
+      if (jaCompra !== "sim") {
         showError("Diz se você já compra TCG.");
         return;
       }
-      if (jaCompra === "sim" && products.length === 0) {
+      if (products.length === 0) {
         showError("Marca o que você mais compra.");
         return;
       }
