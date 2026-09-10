@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /painel
 
 Sitemap: https://pokemontcgpromo.online/sitemap.xml

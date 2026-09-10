@@ -1,0 +1,207 @@
+---
+import { site } from "../lib/site";
+
+const webhook = site.origemWebhook;
+---
+
+<script is:inline define:vars={{ webhook }}>
+  (function () {
+    if (!webhook) return;
+    if (/\/painel\/?$/.test(window.location.pathname)) return;
+
+    var STORAGE_KEY = "tcg_utm_source_v1";
+    var SESSION_KEY = "tcg_origem_sessao";
+    var PAGEVIEW_KEY = "tcg_origem_pv";
+    var MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
+
+    function param(name) {
+      try {
+        return new URLSearchParams(window.location.search).get(name) || "";
+      } catch (err) {
+        return "";
+      }
+    }
+
+    function clip(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .slice(0, 80);
+    }
+
+    function normalizeSource(value) {
+      var source = clip(value);
+      if (source === "fb" || source === "facebook") return "facebook";
+      if (source === "ig" || source === "instagram") return "instagram";
+      if (source === "msg" || source === "messenger") return "messenger";
+      if (source === "an" || source === "audience_network") return "audience_network";
+      if (source === "meta" || source === "fbads") return "meta";
+      return source;
+    }
+
+    function fromReferrer() {
+      try {
+        var host = new URL(document.referrer, window.location.href).hostname.replace(/^www\./, "");
+        if (!host || host === window.location.hostname.replace(/^www\./, "")) return "";
+        if (/(^|\.)facebook\.com$|(^|\.)fb\.com$|(^|\.)fb\.me$/.test(host)) return "facebook";
+        if (/(^|\.)instagram\.com$|(^|\.)l\.instagram\.com$/.test(host)) return "instagram";
+        if (/(^|\.)l\.facebook\.com$/.test(host)) return "facebook";
+        if (/(^|\.)google\./.test(host)) return "google";
+        if (/(^|\.)youtube\.com$|(^|\.)youtu\.be$/.test(host)) return "youtube";
+        if (/(^|\.)tiktok\.com$/.test(host)) return "tiktok";
+        if (/(^|\.)whatsapp\.com$/.test(host)) return "whatsapp";
+        return host.slice(0, 80);
+      } catch (err) {
+        return "";
+      }
+    }
+
+    function currentTouch() {
+      var utmSource = normalizeSource(param("utm_source"));
+      var siteSource = normalizeSource(param("site_source") || param("site_source_name"));
+      var source = siteSource || utmSource;
+      if (!source && param("fbclid")) source = "meta";
+      if (!source) source = fromReferrer() || "direto";
+
+      return {
+        source: source,
+        utm_source: utmSource,
+        utm_medium: clip(param("utm_medium")),
+        utm_campaign: clip(param("utm_campaign")),
+        utm_content: clip(param("utm_content")),
+        site_source: siteSource,
+      };
+    }
+
+    function readStored() {
+      try {
+        var raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        var parsed = JSON.parse(raw);
+        if (!parsed || !parsed.source) return null;
+        if (Date.now() - Number(parsed.at || 0) > MAX_AGE_MS) return null;
+        return parsed;
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function writeStored(touch) {
+      try {
+        window.localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            source: touch.source,
+            utm_source: touch.utm_source,
+            utm_medium: touch.utm_medium,
+            utm_campaign: touch.utm_campaign,
+            utm_content: touch.utm_content,
+            site_source: touch.site_source,
+            at: Date.now(),
+          }),
+        );
+      } catch (err) {}
+    }
+
+    function sessionId() {
+      try {
+        var existing = window.sessionStorage.getItem(SESSION_KEY);
+        if (existing) return existing;
+        var created = "s" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+        window.sessionStorage.setItem(SESSION_KEY, created);
+        return created;
+      } catch (err) {
+        return "s" + Date.now().toString(36);
+      }
+    }
+
+    var visit = currentTouch();
+    var ultimate = readStored();
+    if (!ultimate || ultimate.source === "direto") {
+      if (visit.source && visit.source !== "direto") {
+        writeStored(visit);
+        ultimate = visit;
+      } else if (!ultimate) {
+        writeStored(visit);
+        ultimate = visit;
+      }
+    }
+
+    function payload(evento, destino) {
+      return {
+        evento: evento,
+        utm_source: visit.utm_source || ultimate.utm_source || ultimate.source || "direto",
+        ultimate_source: visit.utm_source || ultimate.utm_source || ultimate.source || "direto",
+        utm_medium: visit.utm_medium || ultimate.utm_medium || "",
+        utm_campaign: visit.utm_campaign || ultimate.utm_campaign || "",
+        utm_content: visit.utm_content || ultimate.utm_content || "",
+        site_source: visit.site_source || ultimate.site_source || "",
+        destino: String(destino || "").slice(0, 160),
+        pagina: window.location.pathname || "/",
+        sessao_id: sessionId(),
+      };
+    }
+
+    function send(evento, destino) {
+      var body = JSON.stringify(payload(evento, destino));
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(webhook, new Blob([body], { type: "text/plain" }));
+          return;
+        }
+      } catch (err) {}
+      try {
+        fetch(webhook, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: body,
+          keepalive: true,
+        }).catch(function () {});
+      } catch (err2) {}
+    }
+
+    try {
+      if (!window.sessionStorage.getItem(PAGEVIEW_KEY)) {
+        window.sessionStorage.setItem(PAGEVIEW_KEY, "1");
+        send("page_view", window.location.href);
+      }
+    } catch (err) {
+      send("page_view", window.location.href);
+    }
+
+    function classify(host) {
+      if (host === "chat.whatsapp.com") return "clique_grupo";
+      if (host === "wa.me" || host === "api.whatsapp.com") return "clique_pedido";
+      if (
+        host === "mercadolivre.com.br" ||
+        host === "produto.mercadolivre.com.br" ||
+        host.indexOf("mercadolivre.") === 0 ||
+        host.indexOf("mercadolibre.") === 0
+      ) {
+        return "clique_ml";
+      }
+      return "";
+    }
+
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+      if (!(target instanceof Element)) return;
+      var link = target.closest("a");
+      if (!link) return;
+      var raw = (link.getAttribute("href") || "").trim();
+      if (!raw || raw === "#conteudo" || raw.charAt(0) === "#") return;
+      var host = "";
+      var href = "";
+      try {
+        var url = new URL(link.href || raw, window.location.href);
+        host = url.hostname.replace(/^www\./, "");
+        href = url.href;
+      } catch (err) {
+        return;
+      }
+      var evento = classify(host);
+      if (!evento) return;
+      send(evento, href);
+    });
+  })();
+</script>

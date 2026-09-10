@@ -1,11 +1,13 @@
 ---
 import "../styles/global.css";
 import MetaPixel from "../components/MetaPixel.astro";
+import OrigemTracker from "../components/OrigemTracker.astro";
 import { site } from "../lib/site";
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const title = Astro.props.title ?? `${site.name} — grupo de ofertas no WhatsApp`;
@@ -22,6 +24,7 @@ const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toSt
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {Astro.props.noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:title" content={title} />
@@ -42,5 +45,6 @@ const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toSt
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <slot />
+    <OrigemTracker />
   </body>
 </html>

@@ -21,6 +21,12 @@ export const site = {
   leadWebhook:
     import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ??
     "https://srv1897392.hstgr.cloud/webhook/captacao/leads-tcg",
+  origemWebhook:
+    import.meta.env.PUBLIC_ORIGEM_WEBHOOK_URL ??
+    "https://srv1897392.hstgr.cloud/webhook/captacao/origem",
+  origemPainelWebhook:
+    import.meta.env.PUBLIC_ORIGEM_PAINEL_WEBHOOK_URL ??
+    "https://srv1897392.hstgr.cloud/webhook/captacao/origem-painel",
   whatsappGroup:
     import.meta.env.PUBLIC_WHATSAPP_GROUP ??
     "https://chat.whatsapp.com/IFxkHX9ADT29EIUHRkCHVo",

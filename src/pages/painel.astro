@@ -1,0 +1,322 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+
+const painelWebhook = site.origemPainelWebhook;
+---
+
+<Base
+  noindex
+  title={`Painel UTM Source — ${site.name}`}
+  description="Painel privado de UTM Source: de onde veio cada visita e clique da campanha."
+>
+  <main id="conteudo" class="mx-auto max-w-3xl px-5 py-8 sm:py-12">
+    <p class="font-display text-sm text-flame">Painel privado</p>
+    <h1 class="mt-2 font-display text-[clamp(1.6rem,6vw,2.6rem)] font-semibold leading-tight text-ink">
+      UTM Source
+    </h1>
+    <p class="measure mt-3 text-base leading-relaxed text-muted">
+      De onde veio o clique pelo parâmetro utm_source: Meta, campanha e anúncio. Visualizações da landing e cliques no grupo, na loja e no pedido.
+    </p>
+
+    <form id="login" class="mt-8 max-w-md space-y-4 rounded-sm border border-ink/10 bg-surface p-5">
+      <label class="block text-left text-sm font-semibold text-ink" for="senha">
+        Senha do painel
+      </label>
+      <input
+        id="senha"
+        name="senha"
+        type="password"
+        autocomplete="current-password"
+        required
+        class="w-full rounded-sm border border-ink/20 bg-bg px-3 py-3 text-base text-ink"
+      />
+      <p class="text-sm leading-relaxed text-muted">
+        A senha é a variável <code>PAINEL_ORIGEM_SENHA</code> no n8n. Esta página não aparece na landing.
+      </p>
+      <p id="login-erro" class="text-sm text-flame" hidden></p>
+      <button class="cta w-full" type="submit">Entrar</button>
+    </form>
+
+    <section id="dashboard" hidden>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label class="flex-1 text-sm font-semibold text-ink">
+          Período
+          <select
+            id="periodo"
+            class="mt-1 w-full rounded-sm border border-ink/20 bg-bg px-3 py-3 text-base font-normal text-ink"
+          >
+            <option value="7">Últimos 7 dias</option>
+            <option value="30" selected>Últimos 30 dias</option>
+            <option value="0">Tudo</option>
+          </select>
+        </label>
+        <label class="flex-[2] text-sm font-semibold text-ink">
+          Buscar origem ou campanha
+          <input
+            id="busca"
+            type="search"
+            placeholder="instagram, meta, nome da campanha…"
+            class="mt-1 w-full rounded-sm border border-ink/20 bg-bg px-3 py-3 text-base font-normal text-ink"
+          />
+        </label>
+      </div>
+
+      <p id="dash-erro" class="mt-4 text-sm text-flame" hidden></p>
+      <p id="atualizado" class="mt-4 text-sm text-muted"></p>
+
+      <ul id="kpis" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4"></ul>
+
+          <h2 class="mt-10 font-display text-lg font-semibold text-ink">Por UTM Source</h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full min-w-[36rem] text-left text-sm">
+          <thead>
+            <tr class="border-b border-ink/15 text-muted">
+              <th class="py-2 pr-3 font-semibold">UTM Source</th>
+              <th class="py-2 pr-3 font-semibold">Visitas</th>
+              <th class="py-2 pr-3 font-semibold">Grupo</th>
+              <th class="py-2 pr-3 font-semibold">ML</th>
+              <th class="py-2 pr-3 font-semibold">Pedido</th>
+              <th class="py-2 font-semibold">Taxa grupo</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-origem"></tbody>
+        </table>
+      </div>
+
+      <h2 class="mt-10 font-display text-lg font-semibold text-ink">Por campanha</h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full min-w-[36rem] text-left text-sm">
+          <thead>
+            <tr class="border-b border-ink/15 text-muted">
+              <th class="py-2 pr-3 font-semibold">Campanha</th>
+              <th class="py-2 pr-3 font-semibold">Visitas</th>
+              <th class="py-2 pr-3 font-semibold">Grupo</th>
+              <th class="py-2 pr-3 font-semibold">ML</th>
+              <th class="py-2 pr-3 font-semibold">Pedido</th>
+              <th class="py-2 font-semibold">Taxa grupo</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-campanha"></tbody>
+        </table>
+      </div>
+
+      <div class="mt-10 rounded-sm border border-ink/10 bg-surface p-5 text-left">
+        <h2 class="font-display text-base font-semibold text-ink">Como marcar o anúncio</h2>
+        <p class="mt-2 text-sm leading-relaxed text-muted">
+          No Gerenciador de Anúncios, no URL da landing, cole estes parâmetros. O <strong>utm_source</strong> diz de onde veio o clique. A Meta preenche o nome da campanha e do anúncio.
+        </p>
+        <code class="mt-3 block overflow-x-auto rounded-sm bg-bg p-3 text-left text-xs leading-relaxed text-ink">
+          utm_source=meta&utm_medium=pago&utm_campaign=&#123;&#123;campaign.name&#125;&#125;&utm_content=&#123;&#123;ad.name&#125;&#125;&site_source=&#123;&#123;site_source_name&#125;&#125;
+        </code>
+      </div>
+
+      <p class="mt-8">
+        <button id="sair" class="cta-ghost" type="button">Sair</button>
+      </p>
+    </section>
+  </main>
+</Base>
+
+<script is:inline define:vars={{ painelWebhook }}>
+  (function () {
+    var AUTH_KEY = "tcg_painel_origem";
+    var loginForm = document.getElementById("login");
+    var dashboard = document.getElementById("dashboard");
+    var loginErro = document.getElementById("login-erro");
+    var dashErro = document.getElementById("dash-erro");
+    var atualizado = document.getElementById("atualizado");
+    var kpis = document.getElementById("kpis");
+    var tabelaOrigem = document.getElementById("tabela-origem");
+    var tabelaCampanha = document.getElementById("tabela-campanha");
+    var periodo = document.getElementById("periodo");
+    var busca = document.getElementById("busca");
+    var dados = null;
+
+    function senhaSalva() {
+      try {
+        return window.sessionStorage.getItem(AUTH_KEY) || "";
+      } catch (err) {
+        return "";
+      }
+    }
+
+    function guardarSenha(valor) {
+      try {
+        window.sessionStorage.setItem(AUTH_KEY, valor);
+      } catch (err) {}
+    }
+
+    function limparSenha() {
+      try {
+        window.sessionStorage.removeItem(AUTH_KEY);
+      } catch (err) {}
+    }
+
+    function showLoginError(message) {
+      loginErro.hidden = !message;
+      loginErro.textContent = message || "";
+    }
+
+    function showDashError(message) {
+      dashErro.hidden = !message;
+      dashErro.textContent = message || "";
+    }
+
+    function kpi(label, value) {
+      return (
+        '<li class="rounded-sm border border-ink/10 bg-surface px-3 py-3">' +
+        '<p class="text-xs text-muted">' +
+        label +
+        "</p>" +
+        '<p class="mt-1 font-display text-2xl font-semibold text-ink">' +
+        value +
+        "</p></li>"
+      );
+    }
+
+    function matchQuery(row, query) {
+      if (!query) return true;
+      return String(row.chave || "")
+        .toLowerCase()
+        .indexOf(query) !== -1;
+    }
+
+    function renderRows(target, rows, query) {
+      var filtered = (rows || []).filter(function (row) {
+        return matchQuery(row, query);
+      });
+      if (!filtered.length) {
+        target.innerHTML =
+          '<tr><td class="py-3 text-muted" colspan="6">Nada neste período.</td></tr>';
+        return;
+      }
+      target.innerHTML = filtered
+        .map(function (row) {
+          return (
+            "<tr class='border-b border-ink/10'>" +
+            "<td class='py-2 pr-3 font-semibold text-ink'>" +
+            escapeHtml(row.chave) +
+            "</td>" +
+            "<td class='py-2 pr-3'>" +
+            row.visualizacoes +
+            "</td>" +
+            "<td class='py-2 pr-3'>" +
+            row.clique_grupo +
+            "</td>" +
+            "<td class='py-2 pr-3'>" +
+            row.clique_ml +
+            "</td>" +
+            "<td class='py-2 pr-3'>" +
+            row.clique_pedido +
+            "</td>" +
+            "<td class='py-2'>" +
+            row.taxa_grupo +
+            "%</td></tr>"
+          );
+        })
+        .join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function formatWhen(iso) {
+      if (!iso) return "";
+      try {
+        return new Date(iso).toLocaleString("pt-BR");
+      } catch (err) {
+        return iso;
+      }
+    }
+
+    function render() {
+      if (!dados || !dados.totais) return;
+      var t = dados.totais;
+      kpis.innerHTML =
+        kpi("Visitas", t.visualizacoes) +
+        kpi("Clique no grupo", t.clique_grupo) +
+        kpi("Clique no ML", t.clique_ml) +
+        kpi("Pedido no privado", t.clique_pedido);
+      atualizado.textContent = dados.atualizado_em
+        ? "Atualizado em " + formatWhen(dados.atualizado_em)
+        : "";
+      var query = String(busca.value || "")
+        .trim()
+        .toLowerCase();
+      renderRows(tabelaOrigem, dados.por_origem, query);
+      renderRows(tabelaCampanha, dados.por_campanha, query);
+    }
+
+    function abrirDashboard() {
+      loginForm.hidden = true;
+      dashboard.hidden = false;
+    }
+
+    function carregar() {
+      var senha = senhaSalva();
+      if (!senha) return;
+      showDashError("");
+      fetch(painelWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          senha: senha,
+          dias: Number(periodo.value || 30),
+        }),
+      })
+        .then(function (res) {
+          return res.json().then(function (payload) {
+            return { ok: res.ok, status: res.status, payload: payload || {} };
+          });
+        })
+        .then(function (result) {
+          if (result.status === 401) {
+            limparSenha();
+            loginForm.hidden = false;
+            dashboard.hidden = true;
+            showLoginError("Senha incorreta.");
+            return;
+          }
+          if (!result.ok || !result.payload.ok) {
+            showDashError("Não deu para ler as métricas agora. Tenta de novo em instantes.");
+            return;
+          }
+          dados = result.payload;
+          abrirDashboard();
+          render();
+        })
+        .catch(function () {
+          showDashError("Falha de rede ao ler o painel.");
+        });
+    }
+
+    loginForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      showLoginError("");
+      var senha = String(document.getElementById("senha").value || "").trim();
+      if (!senha) {
+        showLoginError("Escreve a senha.");
+        return;
+      }
+      guardarSenha(senha);
+      carregar();
+    });
+
+    periodo.addEventListener("change", carregar);
+    busca.addEventListener("input", render);
+    document.getElementById("sair").addEventListener("click", function () {
+      limparSenha();
+      dados = null;
+      dashboard.hidden = true;
+      loginForm.hidden = false;
+      document.getElementById("senha").value = "";
+    });
+
+    if (senhaSalva()) carregar();
+  })();
+</script>
