@@ -246,11 +246,11 @@ const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
         try {
           var payloadStr = JSON.stringify(leadData);
           if (navigator.sendBeacon) {
-            navigator.sendBeacon(webhook, new Blob([payloadStr], { type: "application/json" }));
+            navigator.sendBeacon(webhook, new Blob([payloadStr], { type: "text/plain" }));
           } else {
             fetch(webhook, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "text/plain" },
               body: payloadStr,
               mode: "no-cors",
               keepalive: true
