@@ -6,7 +6,6 @@ const webhook = site.origemWebhook;
 
 <script is:inline define:vars={{ webhook }}>
   (function () {
-    if (!webhook) return;
     if (/\/painel\/?$/.test(window.location.pathname)) return;
 
     var STORAGE_KEY = "tcg_utm_source_v1";
@@ -143,6 +142,7 @@ const webhook = site.origemWebhook;
     }
 
     function send(evento, destino) {
+      if (!webhook) return;
       var body = JSON.stringify(payload(evento, destino));
       try {
         if (navigator.sendBeacon) {

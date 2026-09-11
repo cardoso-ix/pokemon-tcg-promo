@@ -261,6 +261,10 @@ const painelWebhook = site.origemPainelWebhook;
       var senha = senhaSalva();
       if (!senha) return;
       showDashError("");
+      if (!painelWebhook) {
+        showDashError("O webhook do painel não está configurado.");
+        return;
+      }
       fetch(painelWebhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # screenshots locais de verificação
 tmp-verify/
+
+# runbook e scripts privados locais
+GROK-BOT-PROJETO.md
+scripts/

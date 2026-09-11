@@ -1,223 +1,269 @@
 ---
 import { site } from "../lib/site";
-import { buyOptions } from "../lib/lead";
 
 interface Props {
   heading?: string;
+  subheading?: string;
 }
 
-const { heading = "Responde em 20 segundos para entrar" } = Astro.props;
+const {
+  heading = "Acesse o grupo de ofertas no WhatsApp",
+  subheading = "Preencha para receber o convite e ser avisado das melhores promoções antes de esgotar.",
+} = Astro.props;
+
 const webhook = site.leadWebhook;
+const whatsappGroupUrl = site.whatsappGroup;
 const obrigadoHref = `${import.meta.env.BASE_URL}obrigado/`;
-const instagramHref = site.instagram;
 ---
 
 <section id="entrar" class="qualify" aria-labelledby="entrar-titulo">
-  <div class="qualify-panel">
-    <p class="font-display text-sm text-flame">Só para quem já compra TCG</p>
-    <h2 id="entrar-titulo" class="mt-2 font-display text-[clamp(1.45rem,5vw,2.2rem)] font-semibold leading-tight text-ink">
-      {heading}
-    </h2>
-    <p class="measure mt-3 text-sm leading-relaxed text-muted sm:text-base">
-      O grupo é de ofertas do Mercado Livre para quem já compra booster, box ou carta. Curiosos ficam de fora.
-    </p>
+  <div class="qualify-card">
+    <div class="qualify-header">
+      <div class="inline-flex items-center gap-2 rounded-full border border-flame/30 bg-surface/80 px-3 py-1 text-xs font-semibold text-flame">
+        <span class="inline-block h-2 w-2 rounded-full bg-flame animate-pulse" aria-hidden="true"></span>
+        Vagas Abertas · Gratuito
+      </div>
+      <h2 id="entrar-titulo" class="mt-3 font-display text-[clamp(1.5rem,5.5vw,2.2rem)] font-bold leading-tight text-ink">
+        {heading}
+      </h2>
+      <p class="measure mt-2 text-sm leading-relaxed text-muted sm:text-base">
+        {subheading}
+      </p>
+    </div>
 
     <form id="qualify-form" class="qualify-form" novalidate>
-      <label class="qualify-field">
-        <span>Seu nome</span>
-        <input name="nome" type="text" autocomplete="given-name" required maxlength="80" placeholder="Como te chamamos" />
-      </label>
-
-      <fieldset class="qualify-field">
-        <legend>Você já compra Pokémon TCG?</legend>
-        <label class="qualify-choice">
-          <input type="radio" name="ja_compra" value="sim" required />
-          <span>Sim, já compro</span>
+      <div class="qualify-grid">
+        <label class="qualify-field">
+          <span>Seu nome</span>
+          <input
+            id="lead-nome"
+            name="nome"
+            type="text"
+            autocomplete="given-name"
+            required
+            maxlength="60"
+            placeholder="Como te chamamos"
+          />
         </label>
-        <label class="qualify-choice">
-          <input type="radio" name="ja_compra" value="nao" required />
-          <span>Ainda não compro</span>
+
+        <label class="qualify-field">
+          <span>WhatsApp com DDD</span>
+          <input
+            id="lead-whatsapp"
+            name="whatsapp"
+            type="tel"
+            inputmode="numeric"
+            autocomplete="tel"
+            required
+            maxlength="16"
+            placeholder="(11) 99999-9999"
+          />
         </label>
-      </fieldset>
+      </div>
 
-      <fieldset class="qualify-field" id="campo-compra">
-        <legend>O que você mais compra?</legend>
-        {
-          buyOptions.map((option) => (
-            <label class="qualify-choice">
-              <input type="checkbox" name="o_que_compra" value={option.value} />
-              <span>{option.label}</span>
-            </label>
-          ))
-        }
-      </fieldset>
-
-      <label class="qualify-field">
-        <span>WhatsApp com DDD</span>
-        <input
-          name="whatsapp"
-          type="tel"
-          inputmode="numeric"
-          autocomplete="tel"
-          required
-          minlength="10"
-          maxlength="15"
-          placeholder="11 99999-9999"
-        />
-      </label>
-
-      <label class="qualify-consent">
-        <input type="checkbox" name="lgpd" value="sim" required />
-        <span>
-          Autorizo o {site.name} a guardar meu WhatsApp para liberar o grupo e ofertas. A compra é no vendedor, não no grupo. Não somos canal oficial Pokémon.
+      <div class="qualify-field">
+        <span class="block text-xs font-semibold uppercase tracking-wider text-muted">
+          O que você mais coleciona ou compra?
         </span>
-      </label>
+        <div class="qualify-chips" role="group" aria-label="Produtos de maior interesse">
+          <label class="qualify-chip">
+            <input type="checkbox" name="foco" value="booster_box" checked />
+            <span class="chip-label">Booster & Box</span>
+          </label>
+          <label class="qualify-chip">
+            <input type="checkbox" name="foco" value="singles" />
+            <span class="chip-label">Cartas Avulsas</span>
+          </label>
+          <label class="qualify-chip">
+            <input type="checkbox" name="foco" value="etb_colecoes" />
+            <span class="chip-label">Coleções & ETBs</span>
+          </label>
+          <label class="qualify-chip">
+            <input type="checkbox" name="foco" value="decks_acessorios" />
+            <span class="chip-label">Decks & Sleeves</span>
+          </label>
+        </div>
+      </div>
 
-      <p id="qualify-error" class="qualify-error" hidden></p>
+      <p id="qualify-error" class="qualify-error" role="alert" hidden></p>
 
-      <button class="cta w-full" type="submit" id="qualify-submit">
-        Continuar
-      </button>
+      <div class="qualify-action">
+        <button class="cta cta-pulse w-full text-base sm:text-lg" type="submit" id="qualify-submit">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.27-1.38a9.86 9.86 0 0 0 4.77 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01Zm-7.01 15.24h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.3.37-.44.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.32 3.81.6.26 1.08.42 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29Z"
+            ></path>
+          </svg>
+          <span id="qualify-submit-text">Entrar no Grupo no WhatsApp</span>
+        </button>
+
+        <p class="mt-3 text-center text-xs leading-relaxed text-muted">
+          Ao clicar, você será direcionado para o grupo oficial. A compra é realizada diretamente nos vendedores parceiros (Mercado Livre, Amazon, etc.).
+        </p>
+      </div>
     </form>
   </div>
 </section>
 
-<script is:inline define:vars={{ webhook, obrigadoHref, instagramHref }}>
+<script is:inline define:vars={{ webhook, whatsappGroupUrl, obrigadoHref }}>
   (function () {
     var form = document.getElementById("qualify-form");
+    var nomeInput = document.getElementById("lead-nome");
+    var whatsInput = document.getElementById("lead-whatsapp");
     var errorEl = document.getElementById("qualify-error");
     var submitBtn = document.getElementById("qualify-submit");
-    var buyField = document.getElementById("campo-compra");
-    if (!form || !errorEl || !submitBtn) return;
+    var submitText = document.getElementById("qualify-submit-text");
+    if (!form || !nomeInput || !whatsInput || !submitBtn) return;
 
-    function goInstagram() {
-      window.location.href = instagramHref;
+    // Máscara dinâmica de telefone brasileiro (DDD) 99999-9999
+    function formatPhone(value) {
+      var digits = String(value || "").replace(/\D/g, "").slice(0, 11);
+      if (digits.length === 0) return "";
+      if (digits.length <= 2) return "(" + digits;
+      if (digits.length <= 6) return "(" + digits.slice(0, 2) + ") " + digits.slice(2);
+      if (digits.length <= 10) {
+        return "(" + digits.slice(0, 2) + ") " + digits.slice(2, 6) + "-" + digits.slice(6);
+      }
+      return "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7, 11);
     }
 
-    function showError(message) {
+    whatsInput.addEventListener("input", function (e) {
+      var formatted = formatPhone(e.target.value);
+      e.target.value = formatted;
+      hideError();
+    });
+
+    nomeInput.addEventListener("input", function () {
+      hideError();
+    });
+
+    function showError(msg) {
+      if (!errorEl) return;
       errorEl.hidden = false;
-      errorEl.textContent = message;
+      errorEl.textContent = msg;
     }
 
     function hideError() {
+      if (!errorEl) return;
       errorEl.hidden = true;
       errorEl.textContent = "";
     }
 
-    function digits(value) {
-      return String(value || "").replace(/\D/g, "");
-    }
-
-    function utm(name) {
+    function getUtm(name) {
       try {
-        return new URLSearchParams(window.location.search).get(name) || "";
+        var query = new URLSearchParams(window.location.search).get(name);
+        if (query) return query;
+        var stored = JSON.parse(window.localStorage.getItem("tcg_utm_source_v1") || "null");
+        return (stored && stored[name]) || "";
       } catch (err) {
         return "";
       }
     }
 
-    form.addEventListener("change", function () {
-      var selected = form.querySelector('input[name="ja_compra"]:checked');
-      if (selected && selected.value === "nao") {
-        goInstagram();
-        return;
-      }
-      if (!buyField) return;
-      buyField.hidden = false;
-    });
-
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       hideError();
 
-      var data = new FormData(form);
-      var jaCompra = String(data.get("ja_compra") || "");
-      var whatsapp = digits(data.get("whatsapp"));
-      var nome = String(data.get("nome") || "").trim();
-      var products = data.getAll("o_que_compra").map(String);
+      var nome = String(nomeInput.value || "").trim();
+      var rawPhone = String(whatsInput.value || "").replace(/\D/g, "");
 
-      if (!nome) {
-        showError("Escreve seu nome.");
-        return;
-      }
-      if (jaCompra === "nao") {
-        goInstagram();
-        return;
-      }
-      if (jaCompra !== "sim") {
-        showError("Diz se você já compra TCG.");
-        return;
-      }
-      if (products.length === 0) {
-        showError("Marca o que você mais compra.");
-        return;
-      }
-      if (whatsapp.length < 10 || whatsapp.length > 13) {
-        showError("WhatsApp inválido. Usa DDD e o número.");
-        return;
-      }
-      if (data.get("lgpd") !== "sim") {
-        showError("Precisa autorizar o uso do WhatsApp para continuar.");
-        return;
-      }
-      if (!webhook) {
-        showError("O funil ainda não está ligado. Tenta de novo em alguns minutos.");
+      if (!nome || nome.length < 2) {
+        showError("Por favor, digite seu nome.");
+        nomeInput.focus();
         return;
       }
 
+      if (rawPhone.length < 10 || rawPhone.length > 11) {
+        showError("Informe seu WhatsApp com DDD completo.");
+        whatsInput.focus();
+        return;
+      }
+
+      var chips = form.querySelectorAll('input[name="foco"]:checked');
+      var interesses = [];
+      chips.forEach(function (c) {
+        interesses.push(c.value);
+      });
+      if (interesses.length === 0) {
+        interesses.push("booster_box");
+      }
+
+      // Desabilitar botão e sinalizar progresso
       submitBtn.disabled = true;
-      submitBtn.textContent = "Validando…";
+      if (submitText) submitText.textContent = "Liberando seu acesso ao grupo…";
 
-      fetch(webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      var leadData = {
+        id: "lead_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        nome: nome,
+        whatsapp: rawPhone,
+        whatsapp_formatado: formatPhone(rawPhone),
+        interesses: interesses.join(","),
+        origem: getUtm("utm_source") || "direto",
+        utm_source: getUtm("utm_source"),
+        utm_campaign: getUtm("utm_campaign"),
+        utm_medium: getUtm("utm_medium"),
+        data_hora: new Date().toISOString(),
+        status: "quente"
+      };
+
+      // 1. Armazenamento local seguro e autônomo (histórico preservado)
+      try {
+        var historico = JSON.parse(window.localStorage.getItem("tcg_leads_armazenados") || "[]");
+        historico.push(leadData);
+        if (historico.length > 100) historico.shift();
+        window.localStorage.setItem("tcg_leads_armazenados", JSON.stringify(historico));
+
+        window.sessionStorage.setItem("tcgLead", JSON.stringify({
+          status: "quente",
+          groupUrl: whatsappGroupUrl,
           nome: nome,
-          whatsapp: whatsapp,
-          ja_compra: jaCompra,
-          o_que_compra: products.join(","),
-          origem: "landing",
-          lgpd: "sim",
-          utm_source: utm("utm_source"),
-          utm_campaign: utm("utm_campaign"),
-        }),
-      })
-        .then(function (response) {
-          return response.json().then(function (payload) {
-            return { ok: response.ok, payload: payload || {} };
+          ts: Date.now()
+        }));
+      } catch (e) {}
+
+      // 2. Disparo de Conversão nos Pixels (Meta Pixel e Google Ads)
+      try {
+        if (typeof fbq === "function") {
+          fbq("track", "Lead", {
+            content_name: "Lead Quente Pokémon TCG",
+            content_category: leadData.interesses,
+            currency: "BRL",
+            value: 1.0
           });
-        })
-        .then(function (result) {
-          var status = result.payload.status === "quente" ? "quente" : "frio";
-          if (!result.ok && !result.payload.status) {
-            throw new Error("bad");
+          fbq("track", "CompleteRegistration");
+        }
+        if (typeof gtag === "function") {
+          gtag("event", "generate_lead", {
+            event_category: "engagement",
+            event_label: "Grupo WhatsApp TCG"
+          });
+        }
+      } catch (errPixel) {}
+
+      // 3. Se houver webhook/endpoint opcional (Google Sheets via Apps Script, etc.), enviar em segundo plano
+      if (webhook && typeof webhook === "string" && webhook.indexOf("http") === 0) {
+        try {
+          var payloadStr = JSON.stringify(leadData);
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(webhook, new Blob([payloadStr], { type: "application/json" }));
+          } else {
+            fetch(webhook, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: payloadStr,
+              mode: "no-cors",
+              keepalive: true
+            }).catch(function () {});
           }
+        } catch (errHook) {}
+      }
 
-          try {
-            sessionStorage.setItem(
-              "tcgLead",
-              JSON.stringify({
-                status: status,
-                groupUrl: status === "quente" ? result.payload.groupUrl || "" : "",
-                ts: Date.now(),
-              }),
-            );
-          } catch (err) {}
-
-          if (status === "quente" && typeof fbq === "function") {
-            fbq("track", "Lead");
-            try {
-              sessionStorage.setItem("tcgLeadPixel", "1");
-            } catch (err) {}
-          }
-
-          window.location.href = obrigadoHref + "?status=" + encodeURIComponent(status);
-        })
-        .catch(function () {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Continuar";
-          showError("Não deu para validar agora. Tenta de novo.");
-        });
+      // 4. Redirecionar imediatamente para o grupo do WhatsApp oficial!
+      // Pequeno timeout de 250ms apenas para garantir despacho de eventos de analytics
+      setTimeout(function () {
+        window.location.href = whatsappGroupUrl;
+      }, 250);
     });
   })();
 </script>
