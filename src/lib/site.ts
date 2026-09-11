@@ -18,7 +18,9 @@ export const site = {
   // Ativado para captação de leads quentes para o WhatsApp
   leadQuenteEnabled: true,
   enterHref: `${import.meta.env.BASE_URL}#entrar`,
-  leadWebhook: import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ?? "",
+  leadWebhook:
+    import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
+    "https://script.google.com/macros/s/AKfycbxOrH4qxMXvn5CXIvGKszwXcH01cri8lYzeeZYF87KLRB1K_UYslnYIGqpzH6UtIzmN/exec",
   origemWebhook: import.meta.env.PUBLIC_ORIGEM_WEBHOOK_URL ?? "",
   origemPainelWebhook: import.meta.env.PUBLIC_ORIGEM_PAINEL_WEBHOOK_URL ?? "",
   whatsappGroup:
