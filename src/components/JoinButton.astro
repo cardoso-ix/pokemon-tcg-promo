@@ -7,10 +7,8 @@ interface Props {
   href?: string;
 }
 
-const defaultHref = site.leadQuenteEnabled ? site.enterHref : site.whatsappGroup;
-const defaultLabel = site.leadQuenteEnabled
-  ? "Quero entrar no grupo"
-  : "Entrar no grupo no WhatsApp";
+const defaultHref = site.whatsappGroup;
+const defaultLabel = "Entrar no grupo no WhatsApp";
 
 const {
   label = defaultLabel,
@@ -27,6 +25,7 @@ const isPrimaryCta = href === defaultHref;
   href={href}
   target={isExternal ? "_blank" : undefined}
   rel={isExternal ? "noopener noreferrer" : undefined}
+  data-wa-cta={isPrimaryCta ? "true" : undefined}
 >
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
     <path

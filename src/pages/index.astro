@@ -1,12 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
 import JoinButton from "../components/JoinButton.astro";
-import QualifyForm from "../components/QualifyForm.astro";
 import HeroShowcase from "../components/HeroShowcase.astro";
 import { site } from "../lib/site";
 import { artworkCredit } from "../lib/pokemon";
 
-const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
+const bullets = ["Preço comparado", "Cupons relâmpago", "Atualização diária", "Frete Full"];
 ---
 
 <Base>
@@ -15,27 +14,30 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
       <p class="font-display text-sm font-semibold tracking-wide text-ink sm:text-base">
         {site.name}
       </p>
-      <p class="text-xs text-muted sm:text-sm">Gratuito · Vagas Ilimitadas</p>
+      <p class="text-xs text-muted sm:text-sm">Acesso 100% Gratuito · Grupo VIP no WhatsApp</p>
     </div>
   </header>
 
   <main id="conteudo">
+    <!-- Hero Section -->
     <section class="relative overflow-hidden">
       <div class="relative mx-auto flex max-w-3xl flex-col items-center px-5 py-8 text-center sm:py-12 lg:py-16">
         <HeroShowcase />
 
-        <p class="mt-6 font-display text-sm text-flame">Grupo de ofertas no WhatsApp</p>
-        <h1 class="mt-2 font-display text-[clamp(1.7rem,7vw,3.4rem)] font-semibold leading-[1.08] text-ink">
+        <p class="mt-6 font-display text-sm font-semibold uppercase tracking-wider text-flame">
+          ⚡ Grupo de Ofertas no WhatsApp
+        </p>
+        <h1 class="mt-2 font-display text-[clamp(1.7rem,7vw,3.4rem)] font-bold leading-[1.08] text-ink">
           Ofertas de Pokémon TCG com preço comparado
         </h1>
         <p class="measure mx-auto mt-4 text-base leading-relaxed text-muted sm:text-lg">
-          O grupo seleciona booster, box, acessórios, sleeves, coleções, cupons e ofertas do dia e manda no WhatsApp quando o preço faz sentido.
+          Monitore Booster Boxes, Triple Packs, Latas, Sleeves e Cupons no Mercado Livre e Amazon. Receba alertas imediatos direto no seu celular antes que esgote!
         </p>
 
         <ul class="mt-5 flex flex-wrap justify-center gap-2" aria-label="O que o grupo entrega">
           {
             bullets.map((item) => (
-              <li class="rounded-sm border border-flame/40 bg-surface px-3 py-1.5 text-sm text-ink">
+              <li class="rounded-sm border border-flame/40 bg-surface px-3 py-1.5 text-sm font-medium text-ink">
                 {item}
               </li>
             ))
@@ -43,7 +45,7 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
         </ul>
 
         <div class="mt-7 flex w-full max-w-sm flex-col items-center gap-3 sm:mt-8">
-          <JoinButton class="w-full" />
+          <JoinButton class="w-full text-base sm:text-lg" label="Entrar no Grupo no WhatsApp" />
           <p class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm">
             <a class="cta-ghost" href={site.partnerStore} target="_blank" rel="noopener noreferrer">
               Loja no Mercado Livre
@@ -56,56 +58,93 @@ const bullets = ["Preço comparado", "Cupons", "Atualização diária"];
       </div>
     </section>
 
-    <QualifyForm />
+    <!-- Benefícios & Como Funciona (Sem Formulário) -->
+    <section class="relative border-t border-ink/10 bg-surface/40 py-10 sm:py-14">
+      <div class="mx-auto max-w-3xl px-5 text-center">
+        <h2 class="font-display text-2xl font-bold text-ink sm:text-3xl">
+          Como funciona o Grupo VIP?
+        </h2>
+        <p class="measure mx-auto mt-2 text-sm text-muted sm:text-base">
+          Direto ao ponto, sem burocracia ou conversa fiada. Só promoção real e verificada.
+        </p>
 
+        <div class="mt-8 grid grid-cols-1 gap-4 text-left sm:grid-cols-3">
+          <div class="rounded-sm border border-ink/10 bg-surface p-5">
+            <div class="text-2xl">⚡</div>
+            <h3 class="mt-2 font-display text-base font-bold text-ink">1. Curadoria 24h</h3>
+            <p class="mt-1 text-sm leading-relaxed text-muted">
+              Rastreamos as maiores lojas e avisamos no mesmo instante em que o preço cai ou entra em liquidação.
+            </p>
+          </div>
+
+          <div class="rounded-sm border border-ink/10 bg-surface p-5">
+            <div class="text-2xl">🎟️</div>
+            <h3 class="mt-2 font-display text-base font-bold text-ink">2. Cupons Exclusivos</h3>
+            <p class="mt-1 text-sm leading-relaxed text-muted">
+              Códigos de cupons relâmpago do Mercado Livre testados e validados para você aplicar no carrinho.
+            </p>
+          </div>
+
+          <div class="rounded-sm border border-ink/10 bg-surface p-5">
+            <div class="text-2xl">🔇</div>
+            <h3 class="mt-2 font-display text-base font-bold text-ink">3. Grupo Silencioso</h3>
+            <p class="mt-1 text-sm leading-relaxed text-muted">
+              Apenas os administradores enviam ofertas. Zero bate-papo, zero bom dia, 100% foco em economizar.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <JoinButton class="w-full max-w-sm text-base" label="Acessar Grupo VIP Grátis" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Lojas Acompanhadas -->
     <section class="relative overflow-hidden">
-      <div class="relative mx-auto flex max-w-3xl flex-col items-center px-5 pb-8 text-center sm:pb-12 lg:pb-16">
-
-        <div class="mt-10 w-full border-t border-ink/10 pt-8">
-          <h2 class="font-display text-lg font-semibold text-ink">Lojas que acompanhamos</h2>
+      <div class="relative mx-auto flex max-w-3xl flex-col items-center px-5 py-8 text-center sm:py-12">
+        <div class="w-full">
+          <h2 class="font-display text-lg font-semibold text-ink">Lojas e Marketplaces Acompanhados</h2>
           <p class="measure mx-auto mt-2 text-sm leading-relaxed text-muted sm:text-base">
-            O grupo monitora ofertas nessas plataformas. A compra é no vendedor, não no grupo.
+            O grupo monitora e compara ofertas nessas plataformas. A compra é realizada com total segurança direto no vendedor.
           </p>
           <ul class="mt-4 flex flex-wrap justify-center gap-2" aria-label="Lojas monitoradas">
-            <li>
-              <span class="store-pill">Amazon</span>
-            </li>
-            <li>
-              <a
-                class="store-pill store-pill-link"
-                href={site.partnerStore}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Mercado Livre
-              </a>
-            </li>
-            <li>
-              <span class="store-pill">Magalu</span>
-            </li>
-            <li>
-              <span class="store-pill">Shopee</span>
-            </li>
-            <li>
-              <span class="store-pill">e muito mais</span>
-            </li>
+            <li><span class="store-pill">Mercado Livre</span></li>
+            <li><span class="store-pill">Amazon</span></li>
+            <li><span class="store-pill">Magalu</span></li>
+            <li><span class="store-pill">Shopee</span></li>
+            <li><span class="store-pill">e lojas especializadas</span></li>
           </ul>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-ink/10">
-    <div class="mx-auto max-w-xl space-y-4 px-5 py-8 text-center">
-      <p class="text-sm leading-relaxed text-muted">
-        A compra é no vendedor, nas plataformas. O {site.name} só compartilha ofertas como afiliado. Não somos canal oficial Pokémon.
+  <!-- Rodapé com Compliance e Políticas -->
+  <footer class="border-t border-ink/10 bg-surface/30">
+    <div class="mx-auto max-w-2xl space-y-4 px-5 py-8 text-center">
+      <p class="text-xs leading-relaxed text-muted">
+        <strong>Aviso de Isenção:</strong> As transações e pagamentos ocorrem diretamente nas plataformas de destino (Mercado Livre, Amazon, etc.). O {site.name} atua exclusivamente na curadoria e divulgação de ofertas como participante de programas de afiliados.
+      </p>
+      <p class="text-[11px] leading-relaxed text-muted/75">
+        Este site e este serviço não possuem qualquer vínculo comercial, patrocínio ou endosso oficial da <em>Meta Platforms, Inc.</em> (Facebook, Instagram, WhatsApp) ou da <em>Nintendo / The Pokémon Company / Creatures Inc. / GAME FREAK inc.</em> Todos os nomes, logos e personagens citados são marcas registradas de seus respectivos detentores.
       </p>
       <p class="text-xs leading-relaxed text-muted/80">{artworkCredit}</p>
-      <p class="text-sm text-muted">© {new Date().getFullYear()} {site.name}</p>
+      
+      <div class="flex flex-wrap justify-center gap-4 pt-2 text-xs text-muted">
+        <a class="hover:text-ink underline" href="/privacidade">Política de Privacidade</a>
+        <span>·</span>
+        <a class="hover:text-ink underline" href="/termos">Termos de Uso</a>
+        <span>·</span>
+        <a class="hover:text-ink underline" href={site.whatsappPersonalOrder} target="_blank" rel="noopener noreferrer">Fale Conosco</a>
+      </div>
+
+      <p class="pt-2 text-xs text-muted">© {new Date().getFullYear()} {site.name}. Todos os direitos reservados.</p>
     </div>
   </footer>
 
+  <!-- Barra Fixa Mobile CTA -->
   <div class="sticky-cta lg:hidden">
-    <JoinButton class="w-full" />
+    <JoinButton class="w-full text-base" label="Entrar no Grupo no WhatsApp" />
   </div>
 </Base>

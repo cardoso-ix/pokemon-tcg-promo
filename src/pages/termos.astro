@@ -1,0 +1,64 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+
+<Base
+  title={`Termos de Uso - ${site.name}`}
+  description="Termos de Uso e Condições Gerais do Pokémon TCG Promo."
+>
+  <header class="border-b border-ink/10">
+    <div class="mx-auto flex max-w-3xl items-center justify-between px-5 py-4">
+      <a href="/" class="font-display text-sm font-semibold tracking-wide text-ink sm:text-base hover:text-flame">
+        ← {site.name}
+      </a>
+      <a href="/" class="cta-ghost text-xs">Página Inicial</a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="mx-auto max-w-2xl px-5 py-10 sm:py-14">
+    <h1 class="font-display text-3xl font-bold text-ink">Termos de Uso</h1>
+    <p class="mt-2 text-xs text-muted">Última atualização: Setembro de 2026</p>
+
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted">
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">1. Natureza do Serviço</h2>
+        <p class="mt-2">
+          O <strong>{site.name}</strong> é um serviço informativo e gratuito de curadoria de ofertas, promoções e cupons para produtos de Pokémon Trading Card Game (TCG) comercializados em grandes marketplaces, principalmente Mercado Livre e Amazon.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">2. Isenção de Venda Direta</h2>
+        <p class="mt-2">
+          O {site.name} não realiza a venda direta de produtos, não processa pagamentos e não é responsável pelo envio ou garantia de entrega dos itens. Toda compra, faturamento, entrega e suporte pós-venda são de responsabilidade exclusiva dos vendedores e das respectivas plataformas de e-commerce anunciadas.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">3. Participação em Programas de Afiliados</h2>
+        <p class="mt-2">
+          Participamos de programas de marketing de afiliados oficiais. Isso significa que podemos receber uma pequena comissão caso você efetue uma compra através dos links recomendados em nosso site ou canal do WhatsApp, sem nenhum custo adicional para você.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">4. Regras do Grupo no WhatsApp</h2>
+        <p class="mt-2">
+          Nosso grupo é mantido como um canal silencioso e focado. Apenas os moderadores autorizados publicam links e alertas de promoções para garantir a melhor experiência a todos os membros.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">5. Marcas e Direitos Autorais</h2>
+        <p class="mt-2">
+          Pokémon e Pokémon Trading Card Game são marcas registradas de Nintendo, The Pokémon Company, Creatures Inc. e GAME FREAK inc. Este site e suas comunicações são independentes e não oficiais.
+        </p>
+      </section>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a class="cta" href="/">Voltar para a Página Inicial</a>
+    </div>
+  </main>
+</Base>

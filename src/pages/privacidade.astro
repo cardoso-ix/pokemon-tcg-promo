@@ -1,0 +1,68 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+
+<Base
+  title={`Política de Privacidade - ${site.name}`}
+  description="Política de Privacidade e Proteção de Dados do Pokémon TCG Promo."
+>
+  <header class="border-b border-ink/10">
+    <div class="mx-auto flex max-w-3xl items-center justify-between px-5 py-4">
+      <a href="/" class="font-display text-sm font-semibold tracking-wide text-ink sm:text-base hover:text-flame">
+        ← {site.name}
+      </a>
+      <a href="/" class="cta-ghost text-xs">Página Inicial</a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="mx-auto max-w-2xl px-5 py-10 sm:py-14">
+    <h1 class="font-display text-3xl font-bold text-ink">Política de Privacidade</h1>
+    <p class="mt-2 text-xs text-muted">Última atualização: Setembro de 2026</p>
+
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-muted">
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">1. Informações Gerais</h2>
+        <p class="mt-2">
+          O <strong>{site.name}</strong> valoriza a sua privacidade. Esta política descreve como tratamos as informações coletadas durante o acesso ao nosso site e aos nossos canais no WhatsApp.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">2. Coleta de Dados e Finalidade</h2>
+        <p class="mt-2">
+          Não solicitamos nem armazenamos senhas ou dados de cartões de crédito. Ao navegar em nosso site:
+        </p>
+        <ul class="mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Dados de Navegação e Cookies:</strong> Utilizamos ferramentas de análise anônima (como Meta Pixel) e parâmetros UTM para medir a eficácia de nossas campanhas de divulgação.</li>
+          <li><strong>Acesso ao WhatsApp:</strong> O ingresso no grupo de ofertas é voluntário e direto pelo aplicativo oficial do WhatsApp. Nenhum dado pessoal é exigido para navegar no site.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">3. Links de Terceiros e Afiliados</h2>
+        <p class="mt-2">
+          Nosso site e grupo no WhatsApp compartilham links de ofertas e cupons de plataformas terceiras (como Mercado Livre e Amazon). Ao clicar nesses links, você será direcionado para o ambiente seguro da respectiva loja, a qual possui sua própria política de privacidade e termos de serviço.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">4. Isenção e Propriedade Intelectual</h2>
+        <p class="mt-2">
+          Este site não possui afiliação, patrocínio ou endosso da <em>Meta Platforms, Inc.</em> (Facebook, Instagram, WhatsApp) ou da <em>The Pokémon Company / Nintendo / Creatures Inc. / GAME FREAK inc.</em> Todos os direitos autorais pertencem aos seus respectivos titulares.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-lg font-bold text-ink">5. Contato</h2>
+        <p class="mt-2">
+          Para esclarecer dúvidas sobre esta Política de Privacidade, entre em contato através de nosso <a class="underline text-ink hover:text-flame" href={site.whatsappPersonalOrder} target="_blank" rel="noopener noreferrer">canal de atendimento no WhatsApp</a>.
+        </p>
+      </section>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a class="cta" href="/">Voltar para a Página Inicial</a>
+    </div>
+  </main>
+</Base>

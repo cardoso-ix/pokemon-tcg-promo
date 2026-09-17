@@ -62,18 +62,34 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
             content_name = link.getAttribute("aria-label") || destination;
           }
 
-          if (host === "chat.whatsapp.com") {
+          // Clique no convite do grupo VIP no WhatsApp
+          if (host === "chat.whatsapp.com" || link.hasAttribute("data-wa-cta")) {
             fbq("track", "Lead");
             fbq("track", "CompleteRegistration");
-            fbq("trackCustom", "ButtonClick", {
+            fbq("track", "Contact");
+            fbq("trackCustom", "WhatsAppGroupClick", {
               content_name: content_name,
               destination: destination,
             });
             return;
           }
 
+          // Contato direto / pedido privado
           if (host === "wa.me" || host === "api.whatsapp.com") {
             fbq("track", "Contact");
+            fbq("trackCustom", "WhatsAppPersonalClick", {
+              content_name: content_name,
+              destination: destination,
+            });
+            return;
+          }
+
+          // Clique na loja de afiliados Mercado Livre
+          if (host.indexOf("mercadolivre.") !== -1 || host.indexOf("mercadolibre.") !== -1) {
+            fbq("trackCustom", "MercadoLivreClick", {
+              content_name: content_name,
+              destination: destination,
+            });
             return;
           }
 

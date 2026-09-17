@@ -15,9 +15,11 @@ export const site = {
   description:
     "Ofertas selecionadas de cartas Pokémon no Mercado Livre, com atualização diária e curadoria de preços. Entre no grupo do WhatsApp.",
   url: "https://pokemontcgpromo.online",
-  // Ativado para captação de leads quentes para o WhatsApp
-  leadQuenteEnabled: true,
-  enterHref: `${import.meta.env.BASE_URL}#entrar`,
+  // Acesso direto ao WhatsApp ativado (sem formulário intermediário)
+  leadQuenteEnabled: false,
+  enterHref:
+    import.meta.env.PUBLIC_WHATSAPP_GROUP ??
+    "https://chat.whatsapp.com/IFxkHX9ADT29EIUHRkCHVo",
   leadWebhook:
     import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
     "https://script.google.com/macros/s/AKfycbxOrH4qxMXvn5CXIvGKszwXcH01cri8lYzeeZYF87KLRB1K_UYslnYIGqpzH6UtIzmN/exec",
