@@ -10,7 +10,7 @@ const whatsappGroup = site.whatsappGroup;
   description="Redirecionando para o grupo de ofertas de Pokémon TCG no WhatsApp."
 >
   <head slot="head">
-    <meta http-equiv="refresh" content={`0;url=${whatsappGroup}`} />
+    <meta http-equiv="refresh" content={`1;url=${whatsappGroup}`} />
   </head>
 
   <main id="conteudo" class="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center px-5 py-16 text-center">
@@ -47,13 +47,16 @@ const whatsappGroup = site.whatsappGroup;
       try {
         fbq("track", "Lead");
         fbq("track", "CompleteRegistration");
+        fbq("track", "Contact");
       } catch (err) {}
     }
-    // Redirecionamento automático imediato
-    try {
-      window.location.replace(whatsappGroup);
-    } catch (e) {
-      window.location.href = whatsappGroup;
-    }
+    // Redirecionamento seguro após disparo dos eventos
+    setTimeout(function () {
+      try {
+        window.location.replace(whatsappGroup);
+      } catch (e) {
+        window.location.href = whatsappGroup;
+      }
+    }, 280);
   })();
 </script>

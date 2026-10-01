@@ -62,25 +62,45 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
             content_name = link.getAttribute("aria-label") || destination;
           }
 
-          // Clique no convite do grupo VIP no WhatsApp
+          // Clique no convite do grupo VIP no WhatsApp com garantia de disparo de Lead
           if (host === "chat.whatsapp.com" || link.hasAttribute("data-wa-cta")) {
-            fbq("track", "Lead");
-            fbq("track", "CompleteRegistration");
-            fbq("track", "Contact");
-            fbq("trackCustom", "WhatsAppGroupClick", {
-              content_name: content_name,
-              destination: destination,
-            });
+            event.preventDefault();
+            try {
+              fbq("track", "Lead");
+              fbq("track", "CompleteRegistration");
+              fbq("track", "Contact");
+              fbq("trackCustom", "WhatsAppGroupClick", {
+                content_name: content_name,
+                destination: destination,
+              });
+            } catch (err) {}
+
+            // Aguarda 220ms para garantir despacho do pixel antes de abrir o app
+            var navigated = false;
+            function navigate() {
+              if (navigated) return;
+              navigated = true;
+              window.location.href = destination;
+            }
+
+            setTimeout(navigate, 220);
             return;
           }
 
           // Contato direto / pedido privado
           if (host === "wa.me" || host === "api.whatsapp.com") {
-            fbq("track", "Contact");
-            fbq("trackCustom", "WhatsAppPersonalClick", {
-              content_name: content_name,
-              destination: destination,
-            });
+            event.preventDefault();
+            try {
+              fbq("track", "Contact");
+              fbq("trackCustom", "WhatsAppPersonalClick", {
+                content_name: content_name,
+                destination: destination,
+              });
+            } catch (err) {}
+
+            setTimeout(function () {
+              window.location.href = destination;
+            }, 200);
             return;
           }
 
