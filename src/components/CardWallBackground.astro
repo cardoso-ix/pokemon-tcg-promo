@@ -1,19 +1,19 @@
 ---
-// CardWallBackground.astro - Fundo com a foto real de cartas de Pokémon TCG ofuscadas
+// CardWallBackground.astro - Fundo com cartas reais de Pokémon TCG vibrantes e vivas (sem grid)
 ---
 
 <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none">
-  <!-- Imagem Real das Cartas de Pokémon TCG Ofuscada -->
+  <!-- Imagem Real das Cartas de Pokémon TCG com Mais Cor, Brilho e Vida -->
   <img 
     src="/brand/fundo-cartas-pokemon.jpg" 
     alt="Fundo de Cartas Pokémon TCG"
-    class="w-full h-full object-cover object-center opacity-[0.20] filter saturate-[1.25] blur-[1.2px] transform scale-105"
+    class="w-full h-full object-cover object-center opacity-[0.42] filter saturate-[1.65] contrast-[1.12] brightness-[1.06] transform scale-105 transition-opacity"
     loading="eager"
     decoding="async"
     fetchpriority="high"
   />
 
-  <!-- Máscara Radial e Gradiente de Contraste para Foco Total no Centro -->
-  <div class="absolute inset-0 bg-gradient-to-b from-[#070d1e]/75 via-[#070d1e]/65 to-[#070d1e]/90"></div>
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_0%,#070d1e_75%)]"></div>
+  <!-- Gradiente Suave e Máscara Radial de Contraste para Garantir Leitura Perfeita dos Textos -->
+  <div class="absolute inset-0 bg-gradient-to-b from-[#070d1e]/45 via-[#070d1e]/40 to-[#070d1e]/85"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(7,13,30,0.35)_0%,#070d1e_88%)]"></div>
 </div>
