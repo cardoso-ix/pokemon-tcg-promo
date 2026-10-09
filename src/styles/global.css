@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: oklch(0.93 0.055 195);
-  --color-surface: oklch(0.88 0.06 195);
-  --color-ink: oklch(0.22 0.05 195);
-  --color-muted: oklch(0.36 0.045 195);
-  --color-primary: oklch(0.72 0.13 195);
-  --color-primary-deep: oklch(0.42 0.08 195);
-  --color-accent: oklch(0.88 0.18 98);
-  --color-accent-ink: oklch(0.18 0.05 55);
-  --color-flame: oklch(0.5 0.15 48);
-  --color-mark: oklch(0.42 0.13 250);
-  --color-psychic: oklch(0.55 0.06 285);
-  --font-display: "Tektur", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #070d1e;
+  --color-surface: #0d152a;
+  --color-ink: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-primary: #00e5ff;
+  --color-primary-deep: #0284c7;
+  --color-accent: #facc15;
+  --color-accent-ink: #070d1e;
+  --color-flame: #f97316;
+  --color-mark: #38bdf8;
+  --color-psychic: #c084fc;
+  --font-display: "Chakra Petch", "Tektur", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -28,8 +28,8 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
-  background: var(--color-bg);
-  color: var(--color-ink);
+  background: #070d1e;
+  color: #f8fafc;
   font-family: var(--font-body);
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
@@ -38,13 +38,8 @@ html {
 
 body {
   min-height: 100dvh;
-  background:
-    repeating-linear-gradient(
-      -18deg,
-      transparent 0 11px,
-      oklch(0.72 0.13 195 / 0.12) 11px 12px
-    ),
-    var(--color-bg);
+  background-color: #070d1e;
+  color: #f8fafc;
 }
 
 ::selection {
@@ -422,8 +417,41 @@ li {
   bottom: 0;
   z-index: var(--z-sticky);
   padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-  background: oklch(0.93 0.055 195 / 0.96);
-  border-top: 1px solid oklch(0.5 0.15 48 / 0.28);
+  background: rgba(7, 13, 30, 0.95);
+  border-top: 1px solid rgba(37, 211, 102, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes liveDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.35);
+  }
+}
+
+.animate-livedot {
+  animation: liveDot 1.6s ease-in-out infinite;
+}
+
+.bg-tech-grid {
+  background-image: 
+    linear-gradient(rgba(34, 230, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 230, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
 }
 
 @media (max-width: 1023px) {

@@ -10,19 +10,20 @@ interface Props {
   noindex?: boolean;
 }
 
-const title = Astro.props.title ?? `${site.name} — grupo de ofertas no WhatsApp`;
+const title = Astro.props.title ?? `${site.name} — Grupo VIP de Ofertas & Cupons no WhatsApp`;
 const description = Astro.props.description ?? site.description;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
-const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toString();
+const ogImage = "https://cdn.magicpatterns.com/patterns/generated-images/4ed4fd82-8115-47af-aa32-d84325d4f77e.jpg";
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#070d1e" />
     <link rel="canonical" href={canonical} />
     {Astro.props.noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
@@ -37,12 +38,12 @@ const ogImage = new URL("brand/pokemon-tcg-promo-hero.jpg", `${site.url}/`).toSt
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Tektur:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Tektur:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <MetaPixel />
   </head>
-  <body>
+  <body class="bg-[#070d1e] text-slate-100 min-h-screen antialiased selection:bg-emerald-500 selection:text-white">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <slot />
     <OrigemTracker />
