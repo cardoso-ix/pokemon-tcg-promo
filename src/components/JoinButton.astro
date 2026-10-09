@@ -3,17 +3,21 @@ import { site } from "../lib/site";
 
 interface Props {
   label?: string;
+  sublabel?: string;
   class?: string;
   href?: string;
+  size?: "lg" | "md";
 }
 
 const defaultHref = site.whatsappGroup;
-const defaultLabel = "Entrar no grupo no WhatsApp";
+const defaultLabel = "ENTRAR NO GRUPO VIP GRÁTIS";
 
 const {
   label = defaultLabel,
+  sublabel = "⚡ Alertas antes que esgote",
   class: className = "",
   href = defaultHref,
+  size = "lg",
 } = Astro.props;
 
 const isExternal = /^https?:\/\//.test(href);
@@ -21,17 +25,57 @@ const isPrimaryCta = href === defaultHref;
 ---
 
 <a
-  class:list={["cta", isPrimaryCta && "cta-pulse", className]}
+  class:list={[
+    "wa-btn group relative block w-full rounded-2xl cursor-pointer text-decoration-none focus:outline-none focus:ring-4 focus:ring-emerald-500/50",
+    className,
+  ]}
   href={href}
   target={isExternal ? "_blank" : undefined}
   rel={isExternal ? "noopener noreferrer" : undefined}
   data-wa-cta={isPrimaryCta ? "true" : undefined}
 >
-  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-    <path
-      fill="currentColor"
-      d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.27-1.38a9.86 9.86 0 0 0 4.77 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01Zm-7.01 15.24h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.3.37-.44.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.32 3.81.6.26 1.08.42 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29Z"
-    ></path>
-  </svg>
-  {label}
+  {/* Radar pulse rings */}
+  {isPrimaryCta && (
+    <>
+      <span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#25D366] animate-radar" />
+      <span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#25D366]/60 animate-radar-delayed" />
+    </>
+  )}
+
+  {/* Corpo do botão com gradiente e shimmer */}
+  <div class:list={[
+    "relative flex items-center justify-center gap-3.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#25D366] via-[#1ebd5b] to-[#128C7E] text-white shadow-[0_0_25px_rgba(37,211,102,0.45)] transition-all transform group-hover:scale-[1.02] group-active:scale-[0.98]",
+    size === "lg" ? "px-6 py-4 sm:py-5" : "px-4 py-3"
+  ]}>
+    {/* Shimmer sweep */}
+    <span aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 w-1/3 animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+    
+    {/* Ícone oficial WhatsApp com moldura em relevo */}
+    <div class:list={[
+      "relative flex shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/40 shadow-inner",
+      size === "lg" ? "p-2 sm:p-2.5" : "p-1.5"
+    ]}>
+      <svg viewBox="0 0 24 24" class:list={[size === "lg" ? "w-6 h-6 sm:w-7 sm:h-7" : "w-5 h-5", "fill-white drop-shadow"]}>
+        <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.27-1.38a9.86 9.86 0 0 0 4.77 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01Zm-7.01 15.24h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.18 8.18 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.3.37-.44.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.32 3.81.6.26 1.08.42 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.29Z"/>
+      </svg>
+    </div>
+
+    {/* Textos de Ação Direta */}
+    <div class="relative flex flex-col items-start text-left leading-tight">
+      <span class:list={[
+        "font-display font-bold tracking-wide uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]",
+        size === "lg" ? "text-base sm:text-lg" : "text-sm"
+      ]}>
+        {label}
+      </span>
+      {sublabel && (
+        <span class:list={[
+          "font-medium text-emerald-100 mt-0.5",
+          size === "lg" ? "text-xs sm:text-sm" : "text-[11px]"
+        ]}>
+          {sublabel}
+        </span>
+      )}
+    </div>
+  </div>
 </a>
