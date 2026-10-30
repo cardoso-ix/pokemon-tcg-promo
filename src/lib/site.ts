@@ -1,3 +1,6 @@
+// Link do grupo ativo: gravado pelo cockpit (Ajustes > Link do grupo no site) em src/data/grupo.json
+import grupoAtivo from "../data/grupo.json";
+
 const whatsappPersonalBase =
   import.meta.env.PUBLIC_WHATSAPP_PERSONAL ?? "https://wa.me/5549998095955";
 
@@ -17,17 +20,13 @@ export const site = {
   url: "https://pokemontcgpromo.online",
   // Acesso direto ao WhatsApp ativado (sem formulário intermediário)
   leadQuenteEnabled: false,
-  enterHref:
-    import.meta.env.PUBLIC_WHATSAPP_GROUP ??
-    "https://chat.whatsapp.com/IFxkHX9ADT29EIUHRkCHVo",
+  enterHref: grupoAtivo.url,
   leadWebhook:
     import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
     "https://script.google.com/macros/s/AKfycbxOrH4qxMXvn5CXIvGKszwXcH01cri8lYzeeZYF87KLRB1K_UYslnYIGqpzH6UtIzmN/exec",
   origemWebhook: import.meta.env.PUBLIC_ORIGEM_WEBHOOK_URL ?? "",
   origemPainelWebhook: import.meta.env.PUBLIC_ORIGEM_PAINEL_WEBHOOK_URL ?? "",
-  whatsappGroup:
-    import.meta.env.PUBLIC_WHATSAPP_GROUP ??
-    "https://chat.whatsapp.com/IFxkHX9ADT29EIUHRkCHVo",
+  whatsappGroup: grupoAtivo.url,
   instagram:
     import.meta.env.PUBLIC_INSTAGRAM ?? "https://www.instagram.com/promopokemontcg",
   whatsappPersonal: whatsappPersonalBase,
