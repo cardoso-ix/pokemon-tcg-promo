@@ -9,6 +9,7 @@ O fluxo é **100% autônomo, direto e sem atrito**, com acesso em 1 clique para 
 - **Acesso Direto ao Grupo em 1 Clique:** Todos os botões de ação direcionam instantaneamente para o grupo oficial no WhatsApp (`chat.whatsapp.com`), eliminando barreiras de formulário para maximizar a taxa de entrada.
 - **Rastreamento de Conversão Avançado:** Interceptação imediata de cliques pelo Meta Pixel disparando eventos padronizados (`Lead`, `CompleteRegistration`, `Contact` e `WhatsAppGroupClick`).
 - **Rastreamento de Parâmetros de Campanha:** Suporte a UTMs completas (`utm_source`, `utm_campaign`, `utm_content`, etc.), `fbclid` e armazenamento de sessão.
+- **Mensagem por anúncio (`?c=`):** `?c=30anos` (Coleção 30 Anos Copag) e `?c=lucario` (preço comparado) trocam selo, título e texto do topo da página antes da pintura; sem `c` ou valor desconhecido, fica o texto padrão. Variantes no script inline de `src/pages/index.astro`.
 - **Redirecionamento Automático em Rotas Legadas:** A rota `/entrar` redireciona automaticamente em 0 segundos para o grupo de WhatsApp.
 - **Conformidade Legal & Anti-Bloqueio Meta Ads:**
   - Páginas dedicadas de [Política de Privacidade](/privacidade) e [Termos de Uso](/termos).
