@@ -10,6 +10,7 @@ O fluxo é **100% autônomo, direto e sem atrito**, com acesso em 1 clique para 
 - **Rastreamento de Conversão Avançado:** Interceptação imediata de cliques pelo Meta Pixel disparando eventos padronizados (`Lead`, `CompleteRegistration`, `Contact` e `WhatsAppGroupClick`).
 - **Rastreamento de Parâmetros de Campanha:** Suporte a UTMs completas (`utm_source`, `utm_campaign`, `utm_content`, etc.), `fbclid` e armazenamento de sessão.
 - **Mensagem por anúncio (`?c=`):** `?c=30anos` (Coleção 30 Anos Copag) e `?c=lucario` (preço comparado) trocam selo, título e texto do topo da página antes da pintura; sem `c` ou valor desconhecido, fica o texto padrão. Variantes no script inline de `src/pages/index.astro`.
+- **Abertura direta do WhatsApp:** no clique do botão (depois do Lead do pixel), Android usa `intent://chat/?code=…` com `browser_fallback_url` e iPhone tenta `whatsapp://chat?code=…` e, se o app não abrir em 1,5 s, cai no convite `chat.whatsapp.com`; computador usa o convite normal (`src/components/MetaPixel.astro`).
 - **Redirecionamento Automático em Rotas Legadas:** A rota `/entrar` redireciona automaticamente em 0 segundos para o grupo de WhatsApp.
 - **Conformidade Legal & Anti-Bloqueio Meta Ads:**
   - Páginas dedicadas de [Política de Privacidade](/privacidade) e [Termos de Uso](/termos).

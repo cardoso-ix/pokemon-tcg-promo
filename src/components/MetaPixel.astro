@@ -75,11 +75,39 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
               });
             } catch (err) {}
 
-            // Aguarda 220ms para garantir despacho do pixel antes de abrir o app
+            // Aguarda 220ms para garantir despacho do pixel antes de abrir o app.
+            // No celular abre o app do WhatsApp direto no convite (sem a página "Participar do grupo");
+            // sem o app, cai no link normal do convite.
             var navigated = false;
             function navigate() {
               if (navigated) return;
               navigated = true;
+              var code = "";
+              try {
+                var url = new URL(destination);
+                if (url.hostname === "chat.whatsapp.com") code = url.pathname.replace(/^\/+|\/+$/g, "");
+              } catch (err) {}
+              var ua = navigator.userAgent || "";
+              if (code && /Android/i.test(ua)) {
+                window.location.href =
+                  "intent://chat/?code=" + encodeURIComponent(code) +
+                  "#Intent;scheme=whatsapp;S.browser_fallback_url=" + encodeURIComponent(destination) + ";end";
+                return;
+              }
+              if (code && /iPhone|iPad|iPod/i.test(ua)) {
+                var saiu = false;
+                document.addEventListener("visibilitychange", function () {
+                  if (document.hidden) saiu = true;
+                });
+                window.addEventListener("pagehide", function () {
+                  saiu = true;
+                });
+                window.location.href = "whatsapp://chat?code=" + encodeURIComponent(code);
+                setTimeout(function () {
+                  if (!saiu && !document.hidden) window.location.href = destination;
+                }, 1500);
+                return;
+              }
               window.location.href = destination;
             }
 
