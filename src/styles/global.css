@@ -422,6 +422,14 @@ li {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Esconde o botão fixo enquanto um botão do WhatsApp da página está visível (evita dois botões empilhados) */
+.sticky-cta--oculto {
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .text-gradient-gold {

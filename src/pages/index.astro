@@ -44,15 +44,15 @@ import { site } from "../lib/site";
   <main id="conteudo" class="relative z-10">
 
     <!-- HERO SECTION CENTRALIZADO -->
-    <section class="px-5 pt-8 pb-12 sm:pt-14 sm:pb-16 lg:pt-20 lg:pb-24 text-center">
+    <section class="px-5 pt-6 pb-12 sm:pt-14 sm:pb-16 lg:pt-20 lg:pb-24 text-center">
       <div class="mx-auto max-w-3xl flex flex-col items-center justify-center">
 
         <!-- LOGO OFICIAL DO GRUPO NO CENTRO (MEDALHÃO AMPLIADO COM AURA) -->
-        <div class="relative mb-7 sm:mb-9 group">
+        <div class="relative mb-6 sm:mb-9 group">
           <!-- Auras de Brilho Dourado e Fogo ao Redor da Logo Expandidas -->
           <div aria-hidden="true" class="absolute -inset-6 bg-gradient-to-r from-amber-500/45 via-orange-500/40 to-yellow-400/45 rounded-full blur-3xl opacity-85 group-hover:opacity-100 transition-opacity"></div>
           
-          <div class="relative w-48 h-48 sm:w-60 sm:h-60 md:w-68 md:h-68 lg:w-72 lg:h-72 rounded-full p-[4px] bg-gradient-to-br from-amber-200 via-yellow-400 to-amber-600 shadow-[0_0_60px_rgba(250,204,21,0.55),0_25px_50px_rgba(0,0,0,0.85)] animate-float">
+          <div class="relative w-40 h-40 sm:w-60 sm:h-60 md:w-68 md:h-68 lg:w-72 lg:h-72 rounded-full p-[4px] bg-gradient-to-br from-amber-200 via-yellow-400 to-amber-600 shadow-[0_0_60px_rgba(250,204,21,0.55),0_25px_50px_rgba(0,0,0,0.85)] animate-float">
             <img 
               src="/brand/logo-grupo-pokemon-tcg-promo.webp" 
               alt="Logo Oficial Pokémon TCG Promo com Charizard" 
@@ -72,7 +72,7 @@ import { site } from "../lib/site";
         </div>
 
         <!-- Badge de Status Dinâmico -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-center leading-snug max-w-full mb-4">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-livedot"></span>
           <span data-variante="selo">⚡ Grupo VIP Oficial · Vagas Abertas Hoje</span>
         </div>
@@ -86,7 +86,7 @@ import { site } from "../lib/site";
         </h1>
 
         <!-- Subtítulo Centralizado -->
-        <p data-variante="texto" class="mt-5 text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
+        <p data-variante="texto" class="mt-4 text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
           Monitore <strong class="text-white">Booster Boxes, Triple Packs, Latas e Sleeves</strong> com preço comparado e cupons relâmpago no Mercado Livre. Receba alertas imediatos antes que esgote!
         </p>
 
@@ -119,7 +119,7 @@ import { site } from "../lib/site";
         </script>
 
         <!-- BOTÃO PRINCIPAL DO WHATSAPP CENTRALIZADO COM RADAR PULSE E SHIMMER -->
-        <div class="w-full max-w-md mt-7 sm:mt-8">
+        <div class="w-full max-w-md mt-6 sm:mt-8">
           <JoinButton class="w-full" label="ENTRAR NO GRUPO VIP GRÁTIS" sublabel="⚡ Alertas imediatos antes que esgote" size="lg" />
 
           <!-- Micro-Garantias de Confiança -->
@@ -266,7 +266,38 @@ import { site } from "../lib/site";
   </footer>
 
   <!-- STICKY BOTTOM CTA FIXO NO MOBILE -->
-  <div class="sticky-cta lg:hidden">
+  <div id="sticky-cta" class="sticky-cta lg:hidden">
     <JoinButton class="w-full" label="ENTRAR NO GRUPO VIP GRÁTIS" sublabel="" size="md" />
   </div>
+  <script is:inline>
+    (function () {
+      var fixo = document.getElementById("sticky-cta");
+      if (!fixo) return;
+      var botoes = document.querySelectorAll("main [data-wa-cta]");
+      var agendado = false;
+      // Botão da página com pelo menos 1/4 visível acima da faixa do botão fixo: esconde o fixo
+      function atualizar() {
+        agendado = false;
+        var limite = window.innerHeight - fixo.offsetHeight;
+        var algumVisivel = false;
+        for (var i = 0; i < botoes.length; i++) {
+          var r = botoes[i].getBoundingClientRect();
+          var visivel = Math.min(r.bottom, limite) - Math.max(r.top, 0);
+          if (r.height > 0 && visivel >= r.height * 0.25) {
+            algumVisivel = true;
+            break;
+          }
+        }
+        fixo.classList.toggle("sticky-cta--oculto", algumVisivel);
+      }
+      function agendar() {
+        if (agendado) return;
+        agendado = true;
+        requestAnimationFrame(atualizar);
+      }
+      window.addEventListener("scroll", agendar, { passive: true });
+      window.addEventListener("resize", agendar);
+      atualizar();
+    })();
+  </script>
 </Base>
