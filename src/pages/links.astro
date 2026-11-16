@@ -21,6 +21,7 @@ const botoes = [
     sub: "pokemontcgpromo.online",
     href: "/?utm_source=instagram&utm_medium=bio&utm_campaign=links",
     icone: "site",
+    cor: "#3b82f6",
   },
   {
     id: "instagram",
@@ -28,6 +29,7 @@ const botoes = [
     sub: "@pokemon_tcg_promo",
     href: "https://www.instagram.com/pokemon_tcg_promo/",
     icone: "instagram",
+    cor: "#ec4899",
   },
   {
     id: "tiktok",
@@ -35,6 +37,7 @@ const botoes = [
     sub: "@pokemon_tcg_promo",
     href: "https://www.tiktok.com/@pokemon_tcg_promo",
     icone: "tiktok",
+    cor: "#d946ef",
   },
 ];
 
@@ -64,7 +67,7 @@ const ICONES: Record<string, string> = {
     <link rel="preload" as="image" href="/links/fundo-pc.jpg" media="(min-aspect-ratio: 3/4)" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@600;700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <!-- Fundo: compilado dos vídeos do canal (Bulbasaur, Charmander e Squirtle e evoluções, feitos com IA), mudo e em loop.
@@ -82,7 +85,8 @@ const ICONES: Record<string, string> = {
           <img class="logo l2" src="/links/logo-blastoise.webp" width="128" height="128" alt="Logo Pokémon TCG Promo com Blastoise" />
         </div>
         <h1>{site.name}</h1>
-        <p class="frase">Ofertas de cartas Pokémon todo dia</p>
+        <p class="chip">Grupo VIP de ofertas</p>
+        <p class="frase">Ofertas de cartas Pokémon todo dia!</p>
       </header>
 
       <nav aria-label="Links">
@@ -90,7 +94,7 @@ const ICONES: Record<string, string> = {
         <div class="par">
           {
             grupos.map((g) => (
-              <a class="botao vip" href={g.href} data-botao={g.id} rel="noopener">
+              <a class="botao vip" href={g.href} data-botao={g.id} rel="noopener" style="--cor: #22c55e">
                 <span class="icone wa" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><path fill="currentColor" d={WA} /></svg>
                 </span>
@@ -104,7 +108,7 @@ const ICONES: Record<string, string> = {
         </div>
         {
           botoes.map((b) => (
-            <a class="botao vidro" href={b.href} data-botao={b.id} rel={b.href.startsWith("http") ? "noopener" : undefined}>
+            <a class="botao vidro" href={b.href} data-botao={b.id} rel={b.href.startsWith("http") ? "noopener" : undefined} style={"--cor: " + b.cor}>
               <span class="icone" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path fill="currentColor" d={ICONES[b.icone]} /></svg>
               </span>
@@ -113,7 +117,7 @@ const ICONES: Record<string, string> = {
                 <small>{b.sub}</small>
               </span>
               <span class="seta" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6" /></svg>
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
               </span>
             </a>
           ))
@@ -121,8 +125,8 @@ const ICONES: Record<string, string> = {
       </nav>
 
       <footer>
-        <strong>Pokémon TCG Promo</strong> · ofertas no Mercado Livre
-        <small>© 2026 · Site independente. Pokémon é marca de Nintendo, The Pokémon Company, Creatures e GAME FREAK.</small>
+        © 2026 Pokémon TCG Promo • ofertas no Mercado Livre
+        <small>Site independente. Pokémon é marca de Nintendo, The Pokémon Company, Creatures e GAME FREAK.</small>
       </footer>
     </main>
 
@@ -157,7 +161,7 @@ const ICONES: Record<string, string> = {
       html, body { margin: 0; }
       body {
         min-height: 100svh;
-        font-family: Inter, system-ui, sans-serif;
+        font-family: Poppins, system-ui, sans-serif;
         color: #fff;
         background: #0b2233;
         -webkit-font-smoothing: antialiased;
@@ -193,13 +197,13 @@ const ICONES: Record<string, string> = {
         gap: 22px;
       }
 
-      header { text-align: center; }
-      .logos { display: flex; justify-content: center; align-items: center; }
+      header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+      .logos { display: flex; justify-content: center; align-items: center; margin-bottom: 4px; }
       .logo {
         width: 128px;
         height: 128px;
         border-radius: 50%;
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.85);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.9);
         animation: flutua 4s ease-in-out infinite;
       }
       .l1 { transform: rotate(-6deg); margin-right: -14px; z-index: 1; }
@@ -208,63 +212,100 @@ const ICONES: Record<string, string> = {
         0%, 100% { translate: 0 0; }
         50% { translate: 0 -6px; }
       }
-      h1 {
-        margin: 14px 0 6px;
-        font-family: Tektur, Inter, sans-serif;
-        font-size: 1.8rem;
-        letter-spacing: 0.01em;
-        text-shadow: 0 2px 0 #1f6fa3, 0 4px 14px rgba(0, 0, 0, 0.5);
-      }
-      .frase {
+      /* pílulas do topo: nome, chip roxo e frase */
+      h1, .chip, .frase {
         margin: 0;
-        display: inline-block;
-        padding: 5px 14px;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 0.92rem;
-        background: rgba(255, 255, 255, 0.16);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(17, 24, 39, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
       }
+      h1 { font-size: 1.45rem; font-weight: 700; padding: 6px 18px; border-radius: 999px; }
+      .chip { font-size: 0.85rem; font-weight: 500; color: #c4b5fd; padding: 5px 14px; border-radius: 999px; }
+      .frase { font-size: 0.82rem; font-weight: 400; color: #e5e7eb; padding: 7px 14px; border-radius: 12px; }
 
       nav { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
       .rotulo {
         margin: 0 0 -2px;
         text-align: center;
-        font-size: 0.78rem;
-        font-weight: 800;
+        font-size: 0.72rem;
+        font-weight: 600;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+        color: #e5e7eb;
         text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
       }
 
+      /* Botão base: cartão escuro translúcido; no hover cada um acende na cor da sua marca (--cor) */
       .botao {
         position: relative;
         display: flex;
         align-items: center;
         gap: 14px;
         min-height: 64px;
-        padding: 9px 14px 9px 9px;
-        border-radius: 20px;
+        padding: 10px 16px 10px 10px;
+        border-radius: 14px;
         text-decoration: none;
-        color: inherit;
+        color: #fff;
         overflow: hidden;
-        transition: transform 0.18s ease, background 0.18s ease;
+        background: rgba(17, 24, 39, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         -webkit-tap-highlight-color: transparent;
       }
-      .botao:hover { transform: translateY(-2px); }
+      .botao::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, color-mix(in srgb, var(--cor) 35%, transparent), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .botao:hover, .botao:focus-visible {
+        transform: translateY(-3px);
+        border-color: var(--cor);
+        box-shadow: 0 0 0 1px var(--cor), 0 0 22px color-mix(in srgb, var(--cor) 55%, transparent);
+        outline: none;
+      }
+      .botao:hover::before, .botao:focus-visible::before { opacity: 1; }
       .botao:active { transform: scale(0.98); }
-      .botao:focus-visible { outline: 3px solid #ffd93d; outline-offset: 3px; }
+      .botao:hover .icone { transform: scale(1.1) rotate(-6deg); }
+      .botao:hover .seta { transform: translateX(4px); }
 
-      /* Grupos: amarelo-laranja com brilho que atravessa e pulso de luz (piscando) */
+      .icone {
+        flex: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.25s ease;
+      }
+      .icone svg { width: 24px; height: 24px; }
+      .icone.wa { background: #22c55e; }
+      [data-botao="site"] .icone { background: #3b82f6; }
+      [data-botao="instagram"] .icone { background: linear-gradient(45deg, #f59e0b, #ec4899 55%, #8b5cf6); }
+      [data-botao="tiktok"] .icone { background: #d946ef; }
+      .textos { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; z-index: 1; }
+      .textos strong { font-size: 0.98rem; font-weight: 600; }
+      .textos small { font-size: 0.76rem; font-weight: 400; color: #d1d5db; }
+      .seta { width: 20px; height: 20px; color: #fff; position: relative; z-index: 1; transition: transform 0.25s ease; }
+      .seta svg { width: 100%; height: 100%; display: block; }
+
+      /* Grupos: verde com borda amarelo-ciano, piscando e com brilho que atravessa */
       .par { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
       .vip {
         gap: 10px;
-        padding: 9px 10px 9px 9px;
-        color: #2b1a00;
-        background: linear-gradient(135deg, #fff07a 0%, #ffd23d 45%, #ff9f1c 100%);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 18px rgba(255, 170, 30, 0.45);
+        padding: 10px;
+        border: 1.5px solid transparent;
+        background:
+          linear-gradient(90deg, rgba(22, 101, 52, 0.92), rgba(16, 185, 129, 0.75)) padding-box,
+          linear-gradient(90deg, #facc15, #22d3ee) border-box;
         animation: pisca 1.3s ease-in-out infinite;
       }
       .vip::after {
@@ -274,64 +315,34 @@ const ICONES: Record<string, string> = {
         bottom: 0;
         left: -60%;
         width: 40%;
-        background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+        background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
         transform: skewX(-20deg);
         animation: brilho 2.6s ease-in-out infinite;
       }
+      .vip:hover, .vip:focus-visible { border-color: transparent; }
       .par .vip:nth-child(2) { animation-delay: 0.65s; }
       .par .vip:nth-child(2)::after { animation-delay: 1.3s; }
       @keyframes pisca {
-        0%, 100% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 0 rgba(255, 210, 61, 0.9); filter: brightness(1); }
-        50% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 0 9px rgba(255, 210, 61, 0); filter: brightness(1.15); }
+        0%, 100% { box-shadow: 0 0 10px rgba(34, 211, 238, 0.35), 0 0 0 0 rgba(250, 204, 21, 0.7); }
+        50% { box-shadow: 0 0 22px rgba(34, 211, 238, 0.6), 0 0 0 8px rgba(250, 204, 21, 0); }
       }
       @keyframes brilho {
         0%, 55% { left: -60%; }
         100% { left: 130%; }
       }
-      .vip .icone { width: 40px; height: 40px; border-radius: 50%; background: #25d366; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
-      .vip .icone svg { width: 23px; height: 23px; }
-      .vip strong { font-size: 1.08rem; font-weight: 800; }
-      .vip .textos small { color: #5a3a00; font-weight: 600; }
-
-      /* Demais botões: vidro fosco sobre o vídeo */
-      .vidro {
-        background: rgba(255, 255, 255, 0.14);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        backdrop-filter: blur(14px) saturate(1.3);
-        -webkit-backdrop-filter: blur(14px) saturate(1.3);
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
-      }
-      .vidro:hover { background: rgba(255, 255, 255, 0.22); }
-
-      .icone {
-        flex: none;
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        color: #fff;
-        position: relative;
-        z-index: 1;
-      }
-      .icone svg { width: 25px; height: 25px; }
-      [data-botao="site"] .icone { background: linear-gradient(135deg, #3aa0e0, #1f5fa3); }
-      [data-botao="instagram"] .icone { background: linear-gradient(45deg, #f9a825, #e91e63 55%, #8e24aa); }
-      [data-botao="tiktok"] .icone { background: #111; box-shadow: -2px -2px 0 #25f4ee inset, 2px 2px 0 #fe2c55 inset; }
-      .textos { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; z-index: 1; }
-      .textos strong { font-size: 1.04rem; font-weight: 700; }
-      .textos small { font-size: 0.8rem; font-weight: 500; color: rgba(255, 255, 255, 0.78); }
-      .seta { width: 22px; height: 22px; color: rgba(255, 255, 255, 0.85); }
-      .seta svg { width: 100%; height: 100%; display: block; }
+      .vip .icone { width: 40px; height: 40px; border-radius: 11px; }
+      .vip .icone svg { width: 22px; height: 22px; }
+      .vip .textos strong { font-size: 1rem; font-weight: 700; }
+      .vip .textos small { color: #ecfdf5; font-weight: 500; }
 
       footer {
         text-align: center;
         font-size: 0.7rem;
-        color: rgba(255, 255, 255, 0.8);
+        color: #d1d5db;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
         padding-top: 2px;
       }
-      footer small { display: block; margin: 2px auto 0; max-width: 330px; font-size: 0.6rem; line-height: 1.35; color: rgba(255, 255, 255, 0.55); }
+      footer small { display: block; margin: 2px auto 0; max-width: 330px; font-size: 0.6rem; line-height: 1.35; color: rgba(229, 231, 235, 0.6); }
 
       @media (prefers-reduced-motion: reduce) {
         .logo, .vip, .vip::after { animation: none; }
