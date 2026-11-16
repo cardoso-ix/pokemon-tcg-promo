@@ -45,7 +45,7 @@ const whatsappGroup = site.whatsappGroup;
   (function () {
     if (typeof fbq === "function") {
       try {
-        fbq("track", "Lead");
+        fbq("track", "Lead", { currency: "BRL", value: 1.0 });
         fbq("track", "CompleteRegistration");
         fbq("track", "Contact");
       } catch (err) {}

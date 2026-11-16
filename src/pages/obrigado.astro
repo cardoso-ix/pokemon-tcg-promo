@@ -71,7 +71,7 @@ const defaultGroupUrl = site.whatsappGroup;
     if (typeof fbq === "function") {
       try {
         if (sessionStorage.getItem("tcgLeadPixel") !== "1") {
-          fbq("track", "Lead");
+          fbq("track", "Lead", { currency: "BRL", value: 1.0 });
           sessionStorage.setItem("tcgLeadPixel", "1");
         }
       } catch (err) {}

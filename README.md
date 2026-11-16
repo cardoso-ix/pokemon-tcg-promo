@@ -7,7 +7,7 @@ O fluxo é **100% autônomo, direto e sem atrito**, com acesso em 1 clique para 
 ## Funcionalidades
 
 - **Acesso Direto ao Grupo em 1 Clique:** Todos os botões de ação direcionam instantaneamente para o grupo oficial no WhatsApp (`chat.whatsapp.com`), eliminando barreiras de formulário para maximizar a taxa de entrada.
-- **Rastreamento de Conversão Avançado:** Interceptação imediata de cliques pelo Meta Pixel disparando eventos padronizados (`Lead`, `CompleteRegistration`, `Contact` e `WhatsAppGroupClick`).
+- **Rastreamento de Conversão Avançado:** Interceptação imediata de cliques pelo Meta Pixel disparando eventos padronizados (`Lead`, `CompleteRegistration`, `Contact` e `WhatsAppGroupClick`). O `Lead` vai com `value: 1` e `currency: BRL`. Em `localhost`/`127.0.0.1` o pixel não carrega (testes não sujam o pixel das campanhas). A página `/links` tem o pixel só com `PageView`, `BioGroupClick` e `BioLinkClick` (nunca `Lead`, que é o evento de otimização das campanhas).
 - **Rastreamento de Parâmetros de Campanha:** Suporte a UTMs completas (`utm_source`, `utm_campaign`, `utm_content`, etc.), `fbclid` e armazenamento de sessão.
 - **Mensagem por anúncio (`?c=`):** `?c=30anos` (Coleção 30 Anos Copag) e `?c=lucario` (preço comparado) trocam selo, título e texto do topo da página antes da pintura; sem `c` ou valor desconhecido, fica o texto padrão. Variantes no script inline de `src/pages/index.astro`.
 - **Abertura direta do WhatsApp:** no clique do botão (depois do Lead do pixel), Android usa `intent://chat/?code=…` com `browser_fallback_url` e iPhone tenta `whatsapp://chat?code=…` e, se o app não abrir em 1,5 s, cai no convite `chat.whatsapp.com`; computador usa o convite normal (`src/components/MetaPixel.astro`).

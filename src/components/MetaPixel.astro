@@ -9,6 +9,8 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
   pixelId && (
     <>
       <script is:inline define:vars={{ pixelId }}>
+        // Testes locais não mandam eventos para o pixel das campanhas
+        if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
         !(function (f, b, e, v, n, t, s) {
           if (f.fbq) return;
           n = f.fbq = function () {
@@ -27,6 +29,7 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
         })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
         fbq("init", pixelId);
         fbq("track", "PageView");
+        }
       </script>
       <noscript>
         <img
@@ -66,7 +69,7 @@ const pixelId = String(import.meta.env.PUBLIC_META_PIXEL_ID || "1565921198341485
           if (host === "chat.whatsapp.com" || link.hasAttribute("data-wa-cta")) {
             event.preventDefault();
             try {
-              fbq("track", "Lead");
+              fbq("track", "Lead", { currency: "BRL", value: 1.0 });
               fbq("track", "CompleteRegistration");
               fbq("track", "Contact");
               fbq("trackCustom", "WhatsAppGroupClick", {
