@@ -52,53 +52,16 @@ const botoes = [
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Cenário ilustrado próprio: céu, sol, nuvens, morros e grama (SVG, sem arte de terceiros) -->
+    <!-- Fundo: clipe do próprio canal (Bulbasaur e Venusaur feitos com IA), mudo e em loop -->
     <div class="cena" aria-hidden="true">
-      <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMax slice">
-        <defs>
-          <linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#5fb4ec" />
-            <stop offset="0.55" stop-color="#a9dcf5" />
-            <stop offset="1" stop-color="#e9f7e2" />
-          </linearGradient>
-          <radialGradient id="sol" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#fff6c9" />
-            <stop offset="0.45" stop-color="#ffe27a" stop-opacity="0.9" />
-            <stop offset="1" stop-color="#ffe27a" stop-opacity="0" />
-          </radialGradient>
-          <linearGradient id="morro1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#9fd889" />
-            <stop offset="1" stop-color="#6fbf62" />
-          </linearGradient>
-          <linearGradient id="morro2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#7cc962" />
-            <stop offset="1" stop-color="#4ea849" />
-          </linearGradient>
-          <linearGradient id="morro3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#5cb84a" />
-            <stop offset="1" stop-color="#2f8a3a" />
-          </linearGradient>
-        </defs>
-        <rect width="400" height="800" fill="url(#ceu)" />
-        <circle cx="318" cy="120" r="110" fill="url(#sol)" />
-        <g fill="#ffffff" opacity="0.92">
-          <g class="nuvem n1"><ellipse cx="70" cy="150" rx="46" ry="17" /><ellipse cx="96" cy="138" rx="28" ry="20" /><ellipse cx="52" cy="142" rx="22" ry="14" /></g>
-          <g class="nuvem n2"><ellipse cx="250" cy="250" rx="54" ry="18" /><ellipse cx="276" cy="236" rx="30" ry="22" /><ellipse cx="230" cy="240" rx="24" ry="15" /></g>
-          <g class="nuvem n3"><ellipse cx="120" cy="330" rx="36" ry="12" /><ellipse cx="138" cy="321" rx="20" ry="14" /></g>
-        </g>
-        <path d="M0 560 Q90 500 190 540 T400 520 V800 H0Z" fill="url(#morro1)" />
-        <path d="M0 620 Q120 570 230 610 T400 600 V800 H0Z" fill="url(#morro2)" />
-        <path d="M0 690 Q110 650 210 680 T400 670 V800 H0Z" fill="url(#morro3)" />
-        <g fill="#2a7a33">
-          <path d="M30 720 l4 -18 l4 18Z M60 740 l3 -14 l3 14Z M340 705 l4 -17 l4 17Z M370 735 l3 -13 l3 13Z M190 760 l4 -16 l4 16Z" />
-        </g>
-        <g>
-          <circle cx="48" cy="745" r="5" fill="#ffd34d" /><circle cx="48" cy="745" r="2" fill="#f08a24" />
-          <circle cx="356" cy="728" r="5" fill="#ff8fb1" /><circle cx="356" cy="728" r="2" fill="#fff3a8" />
-          <circle cx="214" cy="772" r="4" fill="#ffffff" /><circle cx="214" cy="772" r="1.6" fill="#ffd34d" />
-          <circle cx="110" cy="770" r="4" fill="#ffd34d" /><circle cx="110" cy="770" r="1.6" fill="#f08a24" />
-        </g>
-      </svg>
+      <video autoplay muted loop playsinline preload="auto" poster="/links/fundo.jpg">
+        <source src="/links/fundo.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="topo">
+      <strong>Pokémon TCG Promo</strong> · ofertas no Mercado Livre
+      <small>© 2026 Pokémon TCG Promo. Site independente, sem vínculo com Nintendo, The Pokémon Company, Creatures, GAME FREAK ou Meta. Pokémon é marca registrada de seus detentores.</small>
     </div>
 
     <main>
@@ -145,7 +108,6 @@ const botoes = [
         }
       </nav>
 
-      <footer>Pokémon TCG Promo · ofertas no Mercado Livre</footer>
     </main>
 
     <OrigemTracker />
@@ -157,31 +119,48 @@ const botoes = [
         min-height: 100svh;
         font-family: Inter, system-ui, sans-serif;
         color: #12324a;
-        background: #a9dcf5;
+        background: #0b2233;
         -webkit-font-smoothing: antialiased;
       }
       .cena { position: fixed; inset: 0; z-index: 0; }
-      .cena svg { width: 100%; height: 100%; display: block; }
-      .nuvem { animation: deriva 26s ease-in-out infinite alternate; }
-      .n2 { animation-duration: 34s; }
-      .n3 { animation-duration: 22s; }
-      @keyframes deriva { to { transform: translateX(24px); } }
-      @media (prefers-reduced-motion: reduce) { .nuvem { animation: none; } }
+      .cena video { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .cena::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(6, 20, 32, 0.55) 0%, rgba(6, 20, 32, 0.25) 45%, rgba(6, 20, 32, 0.6) 100%);
+      }
+      .topo {
+        position: relative;
+        z-index: 2;
+        padding: 10px 16px 9px;
+        text-align: center;
+        font-size: 0.82rem;
+        color: #fff;
+        background: rgba(6, 20, 32, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .topo small { display: block; margin-top: 3px; font-size: 0.66rem; line-height: 1.35; color: rgba(255, 255, 255, 0.72); }
+      @keyframes pisca {
+        0%, 100% { box-shadow: 0 4px 0 rgba(18, 50, 74, 0.18), 0 0 0 0 rgba(255, 217, 61, 0.85); filter: brightness(1); }
+        50% { box-shadow: 0 4px 0 rgba(18, 50, 74, 0.18), 0 0 0 10px rgba(255, 217, 61, 0); filter: brightness(1.12); }
+      }
 
       main {
         position: relative;
         z-index: 1;
         max-width: 440px;
         margin: 0 auto;
-        padding: 44px 16px 32px;
+        padding: 22px 16px 28px;
+        min-height: calc(100svh - 92px);
         display: flex;
         flex-direction: column;
         gap: 26px;
       }
       header { text-align: center; }
       .avatar {
-        width: 96px;
-        height: 96px;
+        width: 84px;
+        height: 84px;
         border-radius: 50%;
         border: 4px solid #fff;
         box-shadow: 0 6px 18px rgba(18, 50, 74, 0.25);
@@ -205,7 +184,7 @@ const botoes = [
         padding: 4px 12px;
         border-radius: 999px;
       }
-      nav { display: flex; flex-direction: column; gap: 14px; }
+      nav { display: flex; flex-direction: column; gap: 14px; margin-top: auto; }
       .botao {
         display: flex;
         align-items: center;
@@ -224,7 +203,7 @@ const botoes = [
       .botao:hover { transform: translateY(-2px); }
       .botao:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(18, 50, 74, 0.18); }
       .botao:focus-visible { outline: 3px solid #1f6fa3; outline-offset: 3px; }
-      .botao.destaque { background: #ffd93d; border-color: #fff3a8; }
+      .botao.destaque { background: #ffd93d; border-color: #fff3a8; animation: pisca 1.2s ease-in-out infinite; }
       .icone {
         flex: none;
         width: 46px;
@@ -243,14 +222,6 @@ const botoes = [
       .textos small { font-size: 0.82rem; color: #3d5a70; font-weight: 500; }
       .destaque .textos small { color: #5a4300; }
       .seta { font-size: 1.8rem; line-height: 1; color: #1f6fa3; }
-      footer {
-        text-align: center;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #fff;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-        margin-top: 8px;
-      }
     </style>
   </body>
 </html>
