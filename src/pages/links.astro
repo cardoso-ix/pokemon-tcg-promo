@@ -60,14 +60,15 @@ const ICONES: Record<string, string> = {
     <meta property="og:description" content={descricao} />
     <meta property="og:image" content={`${site.url}/brand/logo-grupo-pokemon-tcg-promo.png`} />
     <link rel="icon" type="image/svg+xml" href="/links/favicon.svg" />
-    <link rel="preload" as="image" href="/links/fundo.jpg" />
+    <link rel="preload" as="image" href="/links/fundo.jpg" media="(max-aspect-ratio: 3/4)" />
+    <link rel="preload" as="image" href="/links/fundo-pc.jpg" media="(min-aspect-ratio: 3/4)" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@600;700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <!-- Fundo: compilado dos vídeos do canal (Bulbasaur, Charmander e Squirtle e evoluções, feitos com IA), mudo e em loop.
-         A imagem (poster) aparece na hora; o vídeo (2,6 MB) toca enquanto baixa. Sem vídeo em modo economia de dados. -->
+         A imagem (poster) aparece na hora; o vídeo (2,6 MB) toca enquanto baixa. Sem vídeo em modo economia de dados; no computador toca fundo-pc.mp4 (1920x1080). -->
     <div class="cena" aria-hidden="true">
       <video id="fundo" muted loop playsinline preload="none" poster="/links/fundo.jpg">
         <source src="/links/fundo.mp4" type="video/mp4" />
@@ -133,6 +134,12 @@ const ICONES: Record<string, string> = {
         var c = navigator.connection || {};
         if (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return;
         if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        // computador (tela deitada): vídeo largo próprio (fundo-pc.mp4, 1920x1080); a imagem fundo-pc.jpg cobre até ele tocar
+        if (window.matchMedia && window.matchMedia("(min-aspect-ratio: 3/4)").matches) {
+          v.removeAttribute("poster");
+          v.src = "/links/fundo-pc.mp4";
+          v.addEventListener("playing", function () { v.className = "pronto"; });
+        }
         function tocar() {
           v.preload = "auto";
           var p = v.play();
@@ -166,23 +173,12 @@ const ICONES: Record<string, string> = {
         inset: 0;
         background: linear-gradient(180deg, rgba(6, 20, 32, 0.55) 0%, rgba(6, 20, 32, 0.2) 40%, rgba(6, 20, 32, 0.75) 100%);
       }
+      /* Computador/tela deitada: vídeo largo próprio (fundo-pc.mp4) com a imagem fundo-pc.jpg por baixo até ele tocar */
       @media (min-aspect-ratio: 3/4) {
-        .cena::before {
-          content: "";
-          position: absolute;
-          inset: -60px;
-          background: url("/links/fundo.jpg") center / cover no-repeat;
-          filter: blur(40px) brightness(0.55) saturate(1.2);
-        }
-        .cena video {
-          position: relative;
-          z-index: 0;
-          width: auto;
-          height: 100%;
-          aspect-ratio: 9 / 16;
-          margin: 0 auto;
-          box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
-        }
+        .cena { background: #0b2233 url("/links/fundo-pc.jpg") center 30% / cover no-repeat; }
+        .cena video { opacity: 0; transition: opacity 0.6s ease; }
+        .cena video.pronto { opacity: 1; }
+        .cena::after { background: radial-gradient(ellipse 420px 100% at 50% 50%, rgba(6, 20, 32, 0.55), rgba(6, 20, 32, 0.15) 100%), linear-gradient(180deg, rgba(6, 20, 32, 0.35), rgba(6, 20, 32, 0.1) 40%, rgba(6, 20, 32, 0.55)); }
       }
 
       main {
